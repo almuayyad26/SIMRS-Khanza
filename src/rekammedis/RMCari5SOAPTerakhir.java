@@ -46,7 +46,8 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
         this.setLocation(10,2);
         setSize(656,250);
 
-        Object[] row={"Tanggal","Jam","Subjek","Objek","Asesmen","Plan","Instruksi","Evaluasi"};
+//        Object[] row={"Tanggal","Jam","Subjek","Objek","Asesmen","Plan","Instruksi","Evaluasi"};
+        Object[] row={"Tanggal","Jam","Subjek","Objek","Asesmen","Plan","Suhu","Tensi","Respirasi","Nadi","SpO2","GCS"};
         tabMode=new DefaultTableModel(null,row){
               @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
         };
@@ -54,7 +55,7 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
         //tbPenyakit.setDefaultRenderer(Object.class, new WarnaTable(panelJudul.getBackground(),tbPenyakit.getBackground()));
         tbKamar.setPreferredScrollableViewportSize(new Dimension(500,500));
         tbKamar.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        for (z= 0; z < 8; z++) {
+        for (z= 0; z < 12; z++) {
             TableColumn column = tbKamar.getColumnModel().getColumn(z);
             if(z==0){
                 column.setPreferredWidth(65);
@@ -68,11 +69,25 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
                 column.setPreferredWidth(220);
             }else if(z==5){
                 column.setPreferredWidth(220);
+//            }else if(z==6){
+//                column.setPreferredWidth(220);
+//            }else if(z==7){
+//                column.setPreferredWidth(220);
+//            }
             }else if(z==6){
-                column.setPreferredWidth(220);
+                column.setPreferredWidth(40);
             }else if(z==7){
-                column.setPreferredWidth(220);
+                column.setPreferredWidth(60);
+            }else if(z==8){
+                column.setPreferredWidth(40);
+            }else if(z==9){
+                column.setPreferredWidth(40);
+            }else if(z==10){
+                column.setPreferredWidth(40);
+            }else if(z==11){
+                column.setPreferredWidth(40);
             }
+            
         }
         tbKamar.setDefaultRenderer(Object.class, new WarnaTable4());
         TCari.setDocument(new batasInput((byte)100).getKata(TCari));
@@ -133,7 +148,7 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Riwayat 5 SOAPIE Terakhir ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(50, 50, 50))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Riwayat SOAP Terakhir ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(50, 50, 50))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -339,7 +354,7 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
             try{
                 ps=koneksi.prepareStatement(
                         "select pemeriksaan_ralan.tgl_perawatan,pemeriksaan_ralan.jam_rawat,pemeriksaan_ralan.keluhan,pemeriksaan_ralan.pemeriksaan,"+
-                        "pemeriksaan_ralan.penilaian,pemeriksaan_ralan.rtl,pemeriksaan_ralan.instruksi,pemeriksaan_ralan.evaluasi "+
+                        "pemeriksaan_ralan.penilaian,pemeriksaan_ralan.rtl,pemeriksaan_ralan.suhu_tubuh,pemeriksaan_ralan.tensi,pemeriksaan_ralan.respirasi,pemeriksaan_ralan.nadi,pemeriksaan_ralan.spo2,pemeriksaan_ralan.gcs "+
                         "from pemeriksaan_ralan inner join reg_periksa on pemeriksaan_ralan.no_rawat=reg_periksa.no_rawat where "+
                         "reg_periksa.no_rkm_medis=? and pemeriksaan_ralan.nip=? and "+
                         "(pemeriksaan_ralan.keluhan like ? or pemeriksaan_ralan.pemeriksaan like ?) "+
@@ -353,7 +368,8 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
                     while(rs.next()){
                         tabMode.addRow(new String[] {
                             rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),
-                            rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)
+                            rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),
+                            rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12)
                         });
                     }
                 }catch(Exception ex){
@@ -373,21 +389,22 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
             try{
                 ps=koneksi.prepareStatement(
                         "select pemeriksaan_ranap.tgl_perawatan,pemeriksaan_ranap.jam_rawat,pemeriksaan_ranap.keluhan,pemeriksaan_ranap.pemeriksaan,"+
-                        "pemeriksaan_ranap.penilaian,pemeriksaan_ranap.rtl,pemeriksaan_ranap.instruksi,pemeriksaan_ranap.evaluasi "+
-                        "from pemeriksaan_ranap inner join reg_periksa on pemeriksaan_ranap.no_rawat=reg_periksa.no_rawat where "+
-                        "reg_periksa.no_rkm_medis=? and pemeriksaan_ranap.nip=? and "+
+                        "pemeriksaan_ranap.penilaian,pemeriksaan_ranap.rtl,pemeriksaan_ranap.suhu_tubuh,pemeriksaan_ranap.tensi,pemeriksaan_ranap.respirasi,pemeriksaan_ranap.nadi,pemeriksaan_ranap.spo2,pemeriksaan_ranap.gcs "+
+                        "from pemeriksaan_ranap inner join reg_periksa on pemeriksaan_ranap.no_rawat=reg_periksa.no_rawat join pegawai on pemeriksaan_ranap.nip=pegawai.nik where "+
+                        "reg_periksa.no_rkm_medis=? and pegawai.jbtn like ? and "+
                         "(pemeriksaan_ranap.keluhan like ? or pemeriksaan_ranap.pemeriksaan like ?) "+
-                        "order by pemeriksaan_ranap.tgl_perawatan desc,pemeriksaan_ranap.jam_rawat desc limit 5");
+                        "order by pemeriksaan_ranap.tgl_perawatan desc,pemeriksaan_ranap.jam_rawat desc limit 10");
                 try{
                     ps.setString(1,norm);
-                    ps.setString(2,nip);
+                    ps.setString(2,"Dokter%");
                     ps.setString(3,"%"+TCari.getText().trim()+"%");
                     ps.setString(4,"%"+TCari.getText().trim()+"%");
                     rs=ps.executeQuery();
                     while(rs.next()){
                         tabMode.addRow(new String[] {
                             rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),
-                            rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)
+                            rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),
+                            rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12)
                         });
                     }
                 }catch(Exception ex){
