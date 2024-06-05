@@ -55,7 +55,8 @@ public final class DlgPermintaanLaboratorium extends javax.swing.JDialog {
     private boolean[] pilih,pilih2; 
     private String[] kode,nama,pemeriksaan2,satuan2,nilai_rujukan2,idtemplate2;
     private int jml=0,i=0,index=0,jml2=0,jml3=0,i2=0,index2=0,jmlparsial=0;
-    private String aktifkanparsial="no",norawatibu="",kelas="",kamar,namakamar,cara_bayar_lab="Yes",kelas_lab="Yes",status="",la="",ld="",pa="",pd="",finger="";
+    private String aktifkanparsial="no",norawatibu="",kelas="",kamar,namakamar,cara_bayar_lab="Yes",kelas_lab="Yes",status="",la="",ld="",pa="",pd="",finger="",nilaiRujukan = "";
+    private int umurHari = 0, umurBulan = 0, umurTahun = 0;
     private boolean sukses=true;
     
 
@@ -2066,29 +2067,76 @@ private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             for(i2=0;i2<tbTarifPK.getRowCount();i2++){ 
                 if(tbTarifPK.getValueAt(i2,0).toString().equals("true")){
                     tabMode.addRow(new Object[]{false,tbTarifPK.getValueAt(i2,2).toString(),"","",""});
-                    pstampil=koneksi.prepareStatement("select template_laboratorium.id_template,template_laboratorium.Pemeriksaan,template_laboratorium.satuan,template_laboratorium.nilai_rujukan_ld,template_laboratorium.nilai_rujukan_la,template_laboratorium.nilai_rujukan_pd,template_laboratorium.nilai_rujukan_pa from template_laboratorium where template_laboratorium.kd_jenis_prw=? and template_laboratorium.Pemeriksaan like ? order by template_laboratorium.urut");
+                    pstampil = koneksi.prepareStatement("select template_laboratorium.id_template,template_laboratorium.Pemeriksaan,template_laboratorium.satuan,"
+                            + "template_laboratorium.bb_nilai_0_1h,template_laboratorium.ba_nilai_0_1h,"
+                            + "template_laboratorium.bb_nilai_1_3h,template_laboratorium.ba_nilai_1_3h,"
+                            + "template_laboratorium.bb_nilai_3_7h,template_laboratorium.ba_nilai_3_7h,"
+                            + "template_laboratorium.bb_nilai_7_14h,template_laboratorium.ba_nilai_7_14h,"
+                            + "template_laboratorium.bb_nilai_14h_1b,template_laboratorium.ba_nilai_14h_1b,"
+                            + "template_laboratorium.bb_nilai_1_2b,template_laboratorium.ba_nilai_1_2b,"
+                            + "template_laboratorium.bb_nilai_2_6b,template_laboratorium.ba_nilai_2_6b,"
+                            + "template_laboratorium.bb_nilai_6b_2t,template_laboratorium.ba_nilai_6b_2t,"
+                            + "template_laboratorium.bb_nilai_2_6t,template_laboratorium.ba_nilai_2_6t,"
+                            + "template_laboratorium.bb_nilai_6_12t,template_laboratorium.ba_nilai_6_12t,"
+                            + "template_laboratorium.bb_nilai_l_12_18t,template_laboratorium.ba_nilai_l_12_18t,"
+                            + "template_laboratorium.bb_nilai_p_12_18t,template_laboratorium.ba_nilai_p_12_18t,"
+                            + "template_laboratorium.bb_nilai_l_18t,template_laboratorium.ba_nilai_l_18t,"
+                            + "template_laboratorium.bb_nilai_p_18t,template_laboratorium.ba_nilai_p_18t "
+                            + "from template_laboratorium where template_laboratorium.kd_jenis_prw=? and template_laboratorium.Pemeriksaan like ? order by template_laboratorium.urut");
+//                    pstampil=koneksi.prepareStatement("select template_laboratorium.id_template,template_laboratorium.Pemeriksaan,template_laboratorium.satuan,template_laboratorium.nilai_rujukan_ld,template_laboratorium.nilai_rujukan_la,template_laboratorium.nilai_rujukan_pd,template_laboratorium.nilai_rujukan_pa from template_laboratorium where template_laboratorium.kd_jenis_prw=? and template_laboratorium.Pemeriksaan like ? order by template_laboratorium.urut");
                     try {
                         pstampil.setString(1,tbTarifPK.getValueAt(i2,1).toString());
                         pstampil.setString(2,"%"+TCari.getText().trim()+"%");
                         rstampil=pstampil.executeQuery();
                         while(rstampil.next()){
-                            la="";ld="";pa="";pd="";
-                            if(!rstampil.getString("nilai_rujukan_ld").equals("")){
-                                ld="LD : "+rstampil.getString("nilai_rujukan_ld");
+                            nilaiRujukan = "";
+//                            la="";ld="";pa="";pd="";
+                            if (umurHari <= 1 && umurBulan == 0 && umurTahun == 0) {
+                                nilaiRujukan = rstampil.getString("bb_nilai_0_1h") + " - " + rstampil.getString("ba_nilai_0_1h");
+                            } else if (umurHari > 1 && umurHari <= 3 && umurBulan == 0 && umurTahun == 0) {
+                                nilaiRujukan = rstampil.getString("bb_nilai_1_3h") + " - " + rstampil.getString("ba_nilai_1_3h");
+                            } else if (umurHari > 3 && umurHari <= 7 && umurBulan == 0 && umurTahun == 0) {
+                                nilaiRujukan = rstampil.getString("bb_nilai_3_7h") + " - " + rstampil.getString("ba_nilai_3_7h");
+                            } else if (umurHari > 7 && umurHari <= 14 && umurBulan == 0 && umurTahun == 0) {
+                                nilaiRujukan = rstampil.getString("bb_nilai_7_14h") + " - " + rstampil.getString("ba_nilai_7_14h");
+                            } else if ((umurHari > 14 && umurBulan == 0 && umurTahun == 0) || (umurHari == 0 && umurBulan == 1 && umurTahun == 0)) {
+                                nilaiRujukan = rstampil.getString("bb_nilai_14h_1b") + " - " + rstampil.getString("ba_nilai_14h_1b");
+                            } else if ((umurHari > 0 && umurBulan == 1 && umurTahun == 0) || (umurHari == 0 && umurBulan == 2 && umurTahun == 0)) {
+                                nilaiRujukan = rstampil.getString("bb_nilai_1_2b") + " - " + rstampil.getString("ba_nilai_1_2b");
+                            } else if ((umurHari > 0 && umurBulan >= 2 && umurBulan < 6 && umurTahun == 0) || (umurHari == 0 && umurBulan == 6 && umurTahun == 0)) {
+                                nilaiRujukan = rstampil.getString("bb_nilai_2_6b") + " - " + rstampil.getString("ba_nilai_2_6b");
+                            } else if ((umurHari > 0 && umurBulan >= 6 && umurTahun == 0) || (umurHari >= 0 && umurBulan >= 0 && umurTahun == 1) || (umurHari == 0 && umurBulan == 0 && umurTahun == 2)) {
+                                nilaiRujukan = rstampil.getString("bb_nilai_6b_2t") + " - " + rstampil.getString("ba_nilai_6b_2t");
+                            } else if ((umurHari > 0 && umurBulan >= 0 && umurTahun >= 2 && umurTahun < 6) || (umurHari == 0 && umurBulan == 0 && umurTahun == 6)) {
+                                nilaiRujukan = rstampil.getString("bb_nilai_2_6t") + " - " + rstampil.getString("ba_nilai_2_6t");
+                            } else if ((umurHari > 0 && umurBulan >= 0 && umurTahun >= 6 && umurTahun < 12) || (umurHari == 0 && umurBulan == 0 && umurTahun == 12)) {
+                                nilaiRujukan = rstampil.getString("bb_nilai_6_12t") + " - " + rstampil.getString("ba_nilai_6_12t");
+                            } else if (Jk.getText().equals("L") && ((umurHari > 0 && umurBulan >= 0 && umurTahun >= 12 && umurTahun < 18) || (umurHari == 0 && umurBulan == 0 && umurTahun == 18))) {
+                                nilaiRujukan = rstampil.getString("bb_nilai_l_12_18t") + " - " + rstampil.getString("ba_nilai_l_12_18t");
+                            } else if (Jk.getText().equals("P") && ((umurHari > 0 && umurBulan >= 0 && umurTahun >= 12 && umurTahun < 18) || (umurHari == 0 && umurBulan == 0 && umurTahun == 18))) {
+                                nilaiRujukan = rstampil.getString("bb_nilai_p_12_18t") + " - " + rstampil.getString("ba_nilai_p_12_18t");
+                            } else if (Jk.getText().equals("L") && ((umurHari > 0 && umurBulan >= 0 && umurTahun == 18) || (umurHari >= 0 && umurBulan >= 0 && umurTahun > 18))) {
+                                nilaiRujukan = rstampil.getString("bb_nilai_l_18t") + " - " + rstampil.getString("ba_nilai_l_18t");
+                            } else if (Jk.getText().equals("P") && ((umurHari > 0 && umurBulan >= 0 && umurTahun == 18) || (umurHari >= 0 && umurBulan >= 0 && umurTahun > 18))) {
+                                nilaiRujukan = rstampil.getString("bb_nilai_p_18t") + " - " + rstampil.getString("ba_nilai_p_18t");
                             }
-                            if(!rstampil.getString("nilai_rujukan_la").equals("")){
-                                la=", LA : "+rstampil.getString("nilai_rujukan_la");
-                            }
-                            if(!rstampil.getString("nilai_rujukan_pa").equals("")){
-                                pd=", PD : "+rstampil.getString("nilai_rujukan_pd");
-                            }
-                            if(!rstampil.getString("nilai_rujukan_pd").equals("")){
-                                pa=" PA : "+rstampil.getString("nilai_rujukan_pa");
-                            }
+//                            if(!rstampil.getString("nilai_rujukan_ld").equals("")){
+//                                ld="LD : "+rstampil.getString("nilai_rujukan_ld");
+//                            }
+//                            if(!rstampil.getString("nilai_rujukan_la").equals("")){
+//                                la=", LA : "+rstampil.getString("nilai_rujukan_la");
+//                            }
+//                            if(!rstampil.getString("nilai_rujukan_pa").equals("")){
+//                                pd=", PD : "+rstampil.getString("nilai_rujukan_pd");
+//                            }
+//                            if(!rstampil.getString("nilai_rujukan_pd").equals("")){
+//                                pa=" PA : "+rstampil.getString("nilai_rujukan_pa");
+//                            }
                             tabMode.addRow(new Object[]{
                                 false,"   "+rstampil.getString("Pemeriksaan"),
                                  rstampil.getString("satuan"),
-                                 ld+la+pd+pa,
+                                 nilaiRujukan,
+//                                 ld+la+pd+pa,
                                  rstampil.getString("id_template"),tbTarifPK.getValueAt(i2,1).toString()
                             });
                         }

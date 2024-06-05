@@ -943,6 +943,9 @@ public final class DlgPeresepanDokter extends javax.swing.JDialog {
 
 
     private void TCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TCariKeyPressed
+        if (tbResep.isEditing()) {
+            tbResep.getCellEditor().stopCellEditing();
+        }
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
             BtnCariActionPerformed(null);
         }else if(evt.getKeyCode()==KeyEvent.VK_PAGE_DOWN){
@@ -1066,7 +1069,10 @@ public final class DlgPeresepanDokter extends javax.swing.JDialog {
     }//GEN-LAST:event_BtnTambahActionPerformed
 
 private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
-        if(TNoRw.getText().trim().equals("")||TPasien.getText().trim().equals("")){
+    if (tbResep.isEditing()) {
+            tbResep.getCellEditor().stopCellEditing();
+        }    
+    if(TNoRw.getText().trim().equals("")||TPasien.getText().trim().equals("")){
             Valid.textKosong(TNoRw,"pasien");
         }else if(KdDokter.getText().trim().equals("")||NmDokter.getText().trim().equals("")){
             Valid.textKosong(KdDokter,"Dokter");
@@ -3873,6 +3879,19 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                     } 
                 }
             }
+            DlgDaftarPermintaanResep daftarresep = new DlgDaftarPermintaanResep(null, false);
+            daftarresep.setCari(TNoRw.getText());
+            
+            daftarresep.setSize(internalFrame1.getWidth(),internalFrame1.getHeight());
+            daftarresep.setLocationRelativeTo(internalFrame1);            
+            if(status.equals("ralan")){
+                daftarresep.TabRawatJalan.setSelectedIndex(1);
+            }else if(status.equals("ranap")){
+                daftarresep.TabPilihRawat.setSelectedIndex(1);
+                daftarresep.TabRawatInap.setSelectedIndex(1);
+            }
+            
+            daftarresep.setVisible(true);
         } catch (Exception e) {
             System.out.println("Notif : "+e);
         } 

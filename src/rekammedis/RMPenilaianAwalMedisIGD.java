@@ -21,6 +21,8 @@ import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -1553,9 +1555,16 @@ public final class RMPenilaianAwalMedisIGD extends javax.swing.JDialog {
                         Thoraks.getSelectedItem().toString(), Abdomen.getSelectedItem().toString(), Genital.getSelectedItem().toString(), Ekstremitas.getSelectedItem().toString(), KetFisik.getText(), KetLokalis.getText(), EKG.getText(), Radiologi.getText(), Laborat.getText(),
                         Diagnosis.getText(), Tatalaksana.getText()
                     });
+
                     LCount.setText("" + tabMode.getRowCount());
                     emptTeks();
                 }
+//                Sequel.menyimpantf("pemeriksaan_ralan", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "Data", 21, new String[]{
+//                    TNoRw.getText(), Valid.SetTgl(TglAsuhan.getSelectedItem() + ""), TglAsuhan.getSelectedItem().toString().substring(11, 19), Suhu.getText(), TD.getText(),
+//                    Nadi.getText(), RR.getText(), TB.getText(), BB.getText(), SPO.getText(), GCS.getText(), Kesadaran.getSelectedItem().toString(), KeluhanUtama.getText(),
+//                    "EKG: " + EKG.getText() + " /nRadiologi: " + Radiologi.getText() + " /nLab: " + Laborat.getText() + " /n" + KetFisik.getText() + " /n" + KetLokalis.getText(), Alergi.getText(), "-", Tatalaksana.getText(), Diagnosis.getText(), "-", "-",
+//                    KdDokter.getText()
+//                });
             }
         }
 
@@ -1645,14 +1654,20 @@ public final class RMPenilaianAwalMedisIGD extends javax.swing.JDialog {
             Valid.pindah(evt, BtnHapus, BtnPrint);
         }
 }//GEN-LAST:event_BtnEditKeyPressed
-
+String timeNow = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
     private void BtnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKeluarActionPerformed
         try {
-            i=JOptionPane.showConfirmDialog(null, "Mau skalian update status pasien sudah diperiksa ????","Konfirmasi",JOptionPane.YES_NO_OPTION);
-            if(i==JOptionPane.YES_OPTION){
-                Sequel.mengedittf("reg_periksa","no_rawat=?","stts=?",2,new String[]{"Sudah",TNoRw.getText()});                
-            }else{
-                Sequel.mengedittf("reg_periksa","no_rawat=?","stts=?",2,new String[]{"Berkas Diterima",TNoRw.getText()});
+            i = JOptionPane.showConfirmDialog(null, "Mau skalian update status pasien sudah diperiksa ????", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (i == JOptionPane.YES_OPTION) {
+                Sequel.mengedittf("reg_periksa", "no_rawat=?", "stts=?", 2, new String[]{"Sudah", TNoRw.getText()});
+                Sequel.menyimpantf("pemeriksaan_ralan", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "Data", 21, new String[]{
+                    TNoRw.getText(), Valid.SetTgl(TglAsuhan.getSelectedItem() + ""), timeNow, Suhu.getText(), TD.getText(),
+                    Nadi.getText(), RR.getText(), TB.getText(), BB.getText(), SPO.getText(), GCS.getText(), Kesadaran.getSelectedItem().toString(), KeluhanUtama.getText(),
+                    "EKG: " + EKG.getText() + " \nRadiologi: " + Radiologi.getText() + " \nLab: " + Laborat.getText() + " \n" + KetFisik.getText() + " \n" + KetLokalis.getText(), Alergi.getText(), "-", Tatalaksana.getText(), Diagnosis.getText(), "-", "-",
+                    KdDokter.getText()
+                });
+            } else {
+                Sequel.mengedittf("reg_periksa", "no_rawat=?", "stts=?", 2, new String[]{"Berkas Diterima", TNoRw.getText()});
             }
         } catch (Exception e) {
         }
@@ -2302,42 +2317,42 @@ public final class RMPenilaianAwalMedisIGD extends javax.swing.JDialog {
             tbObat.setRowSelectionAllowed(true);
             tbObat.setRowSelectionInterval(0, 0);
             getData();
-        }else{
-        Anamnesis.setSelectedIndex(0);
-        Hubungan.setText("");
-        KeluhanUtama.setText("");
-        RPS.setText("");
-        RPK.setText("");
-        RPD.setText("");
-        RPO.setText("");
-        Alergi.setText("");
-        Keadaan.setSelectedIndex(0);
-        GCS.setText("");
-        Kesadaran.setSelectedIndex(0);
-        TD.setText("");
-        Nadi.setText("");
-        RR.setText("");
-        Suhu.setText("");
-        BB.setText("");
-        TB.setText("");
-        Kepala.setSelectedIndex(0);
-        Mata.setSelectedIndex(0);
-        Gigi.setSelectedIndex(0);
-        Leher.setSelectedIndex(0);
-        Thoraks.setSelectedIndex(0);
-        Abdomen.setSelectedIndex(0);
-        Genital.setSelectedIndex(0);
-        Ekstremitas.setSelectedIndex(0);
-        KetFisik.setText("");
-        KetLokalis.setText("");
-        EKG.setText("");
-        Radiologi.setText("");
-        Laborat.setText("");
-        Diagnosis.setText("");
-        Tatalaksana.setText("");
-        TglAsuhan.setDate(new Date());
-        TabRawat.setSelectedIndex(0);
-        Anamnesis.requestFocus();
+        } else {
+            Anamnesis.setSelectedIndex(0);
+            Hubungan.setText("");
+            KeluhanUtama.setText("");
+            RPS.setText("");
+            RPK.setText("");
+            RPD.setText("");
+            RPO.setText("");
+            Alergi.setText("");
+            Keadaan.setSelectedIndex(0);
+            GCS.setText("");
+            Kesadaran.setSelectedIndex(0);
+            TD.setText("");
+            Nadi.setText("");
+            RR.setText("");
+            Suhu.setText("");
+            BB.setText("");
+            TB.setText("");
+            Kepala.setSelectedIndex(0);
+            Mata.setSelectedIndex(0);
+            Gigi.setSelectedIndex(0);
+            Leher.setSelectedIndex(0);
+            Thoraks.setSelectedIndex(0);
+            Abdomen.setSelectedIndex(0);
+            Genital.setSelectedIndex(0);
+            Ekstremitas.setSelectedIndex(0);
+            KetFisik.setText("");
+            KetLokalis.setText("");
+            EKG.setText("");
+            Radiologi.setText("");
+            Laborat.setText("");
+            Diagnosis.setText("");
+            Tatalaksana.setText("");
+            TglAsuhan.setDate(new Date());
+            TabRawat.setSelectedIndex(0);
+            Anamnesis.requestFocus();
         }
     }
 
@@ -2507,5 +2522,11 @@ public final class RMPenilaianAwalMedisIGD extends javax.swing.JDialog {
             emptTeks();
             TabRawat.setSelectedIndex(1);
         }
+//        Sequel.mengedittf("pemeriksaan_ralan", "no_rawat=?,nip=?", "no_rawat=?,tgl_perawatan=?,jam_rawat=?,suhu_tubuh=?,tensi=?,nadi=?,respirasi=?,tinggi=?,berat=?,spo2=?,gcs=?,kesadaran=?,keluhan=?,pemeriksaan=?,alergi=?,lingkar_perut=?,rtl=?,penilaian=?,instruksi=?,evaluasi=?,nip=?",23, new String[]{
+//            TNoRw.getText(), Valid.SetTgl(TglAsuhan.getSelectedItem() + ""), TglAsuhan.getSelectedItem().toString().substring(11, 19), Suhu.getText(), TD.getText(),
+//            Nadi.getText(), RR.getText(), TB.getText(), BB.getText(), SPO.getText(), GCS.getText(), Kesadaran.getSelectedItem().toString(), KeluhanUtama.getText(),
+//            "EKG: " + EKG.getText() + " /nRadiologi: " + Radiologi.getText() + " /nLab: " + Laborat.getText() + " /n" + KetFisik.getText() + " /n" + KetLokalis.getText(), Alergi.getText(), "-", Tatalaksana.getText(), Diagnosis.getText(), "-", "-",
+//            KdDokter.getText(), tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString(),tbObat.getValueAt(tbObat.getSelectedRow(), 5).toString()
+//        });
     }
 }

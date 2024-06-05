@@ -601,7 +601,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
         panelisi2.add(jLabel20);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-02-2024" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "04-06-2024" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -615,7 +615,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
         panelisi2.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-02-2024" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "04-06-2024" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -897,6 +897,16 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
             }
         ));
         tbDetailResepRalan.setName("tbDetailResepRalan"); // NOI18N
+        tbDetailResepRalan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbDetailResepRalanMouseClicked(evt);
+            }
+        });
+        tbDetailResepRalan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tbDetailResepRalanKeyPressed(evt);
+            }
+        });
         scrollPane2.setViewportView(tbDetailResepRalan);
 
         TabRawatJalan.addTab("Detail Rawat Jalan", scrollPane2);
@@ -1016,6 +1026,16 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
             }
         ));
         tbDetailResepRanap.setName("tbDetailResepRanap"); // NOI18N
+        tbDetailResepRanap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbDetailResepRanapMouseClicked(evt);
+            }
+        });
+        tbDetailResepRanap.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tbDetailResepRanapKeyPressed(evt);
+            }
+        });
         scrollPane4.setViewportView(tbDetailResepRanap);
 
         TabRawatInap.addTab("Detail Rawat Inap", scrollPane4);
@@ -3112,6 +3132,50 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
         }
     }//GEN-LAST:event_BtnResepAwalActionPerformed
 
+    private void tbDetailResepRalanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDetailResepRalanMouseClicked
+        // TODO add your handling code here:
+        if(tabMode2.getRowCount()!=0){
+            try {
+                getDataDetailRalan();
+            } catch (java.lang.NullPointerException e) {
+            }
+        }
+    }//GEN-LAST:event_tbDetailResepRalanMouseClicked
+
+    private void tbDetailResepRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbDetailResepRalanKeyPressed
+        // TODO add your handling code here:
+        if(tabMode2.getRowCount()!=0){
+            if(evt.getKeyCode()==KeyEvent.VK_SPACE){
+                try {
+                    getDataDetailRalan();
+                } catch (java.lang.NullPointerException e) {
+                }                  
+            }
+        }
+    }//GEN-LAST:event_tbDetailResepRalanKeyPressed
+
+    private void tbDetailResepRanapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDetailResepRanapMouseClicked
+        // TODO add your handling code here:
+        if(tabMode4.getRowCount()!=0){
+            try {
+                getDataDetailRanap();
+            } catch (java.lang.NullPointerException e) {
+            }
+        }
+    }//GEN-LAST:event_tbDetailResepRanapMouseClicked
+
+    private void tbDetailResepRanapKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbDetailResepRanapKeyPressed
+        // TODO add your handling code here:
+        if(tabMode4.getRowCount()!=0){
+            if(evt.getKeyCode()==KeyEvent.VK_SPACE){
+                try {
+                    getDataDetailRanap();
+                } catch (java.lang.NullPointerException e) {
+                }                  
+            }
+        }
+    }//GEN-LAST:event_tbDetailResepRanapKeyPressed
+
     /**
     * @param args the command line arguments
     */
@@ -3163,9 +3227,9 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     private widget.PanelBiasa PanelAccor;
     private widget.ScrollPane ScrollMenu;
     private widget.TextBox TCari;
-    private javax.swing.JTabbedPane TabPilihRawat;
-    private javax.swing.JTabbedPane TabRawatInap;
-    private javax.swing.JTabbedPane TabRawatJalan;
+    public javax.swing.JTabbedPane TabPilihRawat;
+    public javax.swing.JTabbedPane TabRawatInap;
+    public javax.swing.JTabbedPane TabRawatJalan;
     private widget.ComboBox cmbStatus;
     private widget.InternalFrame internalFrame1;
     private widget.InternalFrame internalFrame2;
@@ -3300,6 +3364,22 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     public void emptTeks() {
         TCari.setText("");
         TCari.requestFocus();
+    }
+    
+    private void getDataDetailRalan() {
+        if(tbDetailResepRalan.getSelectedRow()!= -1){
+            tbResepRalan.setRowSelectionAllowed(true);
+            tbResepRalan.setRowSelectionInterval(0, 0);
+            getData();
+        }
+    }
+    
+    private void getDataDetailRanap() {
+        if(tbDetailResepRanap.getSelectedRow()!= -1){
+            tbResepRanap.setRowSelectionAllowed(true);
+            tbResepRanap.setRowSelectionInterval(0, 0);
+            getData2();
+        }
     }
 
     private void getData() {

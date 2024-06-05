@@ -8361,39 +8361,39 @@ private void ppRegistrasiBtnPrintActionPerformed(java.awt.event.ActionEvent evt)
         TUmurBl.setText(String.valueOf(p.getMonths()));
         TUmurHr.setText(String.valueOf(p.getDays()));
 
-        if (CmbJk.getSelectedIndex() == 0) {
-//            if (Integer.valueOf(TUmurTh.getText()) <= 25) {
-//                CmbStts.setSelectedIndex(1);
-//            } else {
-//                CmbStts.setSelectedIndex(0);
+//        if (CmbJk.getSelectedIndex() == 0) {
+////            if (Integer.valueOf(TUmurTh.getText()) <= 25) {
+////                CmbStts.setSelectedIndex(1);
+////            } else {
+////                CmbStts.setSelectedIndex(0);
+////            }
+//            if (Integer.valueOf(TUmurTh.getText()) < 18) {
+////                    TNm.setText(cekViaBPJS.nama+ " .AN");
+//                CmbSebutan.setSelectedItem("AN");
+//            } else if (Integer.valueOf(TUmurTh.getText()) >= 18 && Integer.valueOf(TUmurTh.getText()) <= 25) {
+////                    TNm.setText(cekViaBPJS.nama+ " .SDR");
+//                CmbSebutan.setSelectedItem("SDR");
+//            } else if (Integer.valueOf(TUmurTh.getText()) > 25) {
+////                    TNm.setText(cekViaBPJS.nama+ " .TN");
+//                CmbSebutan.setSelectedItem("TN");
 //            }
-            if (Integer.valueOf(TUmurTh.getText()) < 18) {
-//                    TNm.setText(cekViaBPJS.nama+ " .AN");
-                CmbSebutan.setSelectedItem("AN");
-            } else if (Integer.valueOf(TUmurTh.getText()) >= 18 && Integer.valueOf(TUmurTh.getText()) <= 25) {
-//                    TNm.setText(cekViaBPJS.nama+ " .SDR");
-                CmbSebutan.setSelectedItem("SDR");
-            } else if (Integer.valueOf(TUmurTh.getText()) > 25) {
-//                    TNm.setText(cekViaBPJS.nama+ " .TN");
-                CmbSebutan.setSelectedItem("TN");
-            }
-        } else {
-//            if (Integer.valueOf(TUmurTh.getText()) <= 23) {
-//                CmbStts.setSelectedIndex(1);
-//            } else {
-//                CmbStts.setSelectedIndex(0);
+//        } else {
+////            if (Integer.valueOf(TUmurTh.getText()) <= 23) {
+////                CmbStts.setSelectedIndex(1);
+////            } else {
+////                CmbStts.setSelectedIndex(0);
+////            }
+//            if (Integer.valueOf(TUmurTh.getText()) < 18) {
+////                    TNm.setText(cekViaBPJS.nama+ " .AN");
+//                CmbSebutan.setSelectedItem("AN");
+//            } else if (Integer.valueOf(TUmurTh.getText()) >= 18 && Integer.valueOf(TUmurTh.getText()) <= 23) {
+////                    TNm.setText(cekViaBPJS.nama+ " .NN");
+//                CmbSebutan.setSelectedItem("NN");
+//            } else if (Integer.valueOf(TUmurTh.getText()) > 23) {
+////                    TNm.setText(cekViaBPJS.nama+ " .NY");
+//                CmbSebutan.setSelectedItem("NY");
 //            }
-            if (Integer.valueOf(TUmurTh.getText()) < 18) {
-//                    TNm.setText(cekViaBPJS.nama+ " .AN");
-                CmbSebutan.setSelectedItem("AN");
-            } else if (Integer.valueOf(TUmurTh.getText()) >= 18 && Integer.valueOf(TUmurTh.getText()) <= 23) {
-//                    TNm.setText(cekViaBPJS.nama+ " .NN");
-                CmbSebutan.setSelectedItem("NN");
-            } else if (Integer.valueOf(TUmurTh.getText()) > 23) {
-//                    TNm.setText(cekViaBPJS.nama+ " .NY");
-                CmbSebutan.setSelectedItem("NY");
-            }
-        }
+//        }
         
 //        if (CmbJk.getSelectedItem().toString().toLowerCase().contains("laki-laki")) {
 //            if (Integer.valueOf(TUmurTh.getText()) < 18) {
@@ -8516,7 +8516,7 @@ private void ppRegistrasiBtnPrintActionPerformed(java.awt.event.ActionEvent evt)
         } else if (CmbSebutan.getSelectedItem().toString().toLowerCase().contains("by")) {
             CmbStts.setSelectedItem("BELUM MENIKAH");
         }
-        CmbJk.requestFocus();
+//        CmbJk.requestFocus();
     }//GEN-LAST:event_CmbSebutanItemStateChanged
 
     private void CmbKeluargaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbKeluargaItemStateChanged

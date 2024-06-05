@@ -47,24 +47,112 @@ public final class DlgTemplateLaboratorium extends javax.swing.JDialog {
         initComponents();
         this.setLocation(10,2);
         setSize(656,250);
+        
+        Object[] row = {"Pemeriksaan",
+            "Satuan",
+            "BB 0-1 Hari",
+            "BA 0-1 Hari",
+            "BB >1-3 Hari",
+            "BA >1-3 Hari",
+            "BB >3-7 Hari",
+            "BA >3-7 Hari",
+            "BB >7-14 Hari",
+            "BA >7-14 Hari",
+            "BB >14 Hari-1 Bulan",
+            "BA >14 Hari-1 Bulan",
+            "BB >1-2 Bulan",
+            "BA >1-2 Bulan",
+            "BB >2-6 Bulan",
+            "BA >2-6 Bulan",
+            "BB >6 Bulan-2 Tahun",
+            "BA >6 Bulan-2 Tahun",
+            "BB >2-6 Tahun",
+            "BA >2-6 Tahun",
+            "BB >6-12 Tahun",
+            "BA >6-12 Tahun",
+            "BB L:>12-18 Tahun",
+            "BA L:>12-18 Tahun",
+            "BB P:>12-18 Tahun",
+            "BA P:>12-18 Tahun",
+            "BB L:>18 Tahun",
+            "BA L:>18 Tahun",
+            "BB P:>18 Tahun",
+            "BA P:>18 Tahun",
+            "J.S. Rmh Skt",
+            "Paket BHP",
+            "J.M. Perujuk",
+            "J.M. Dokter",
+            "J.M. Laborat",
+            "K.S.O.",
+            "Menejemen",
+            "Biaya Item",
+            "",
+            ""};
 
-        Object[] row={"Pemeriksaan","Satuan","N.Rujukan L.D.","N.Rujukan L.A.","N.Rujukan P.D.",
-                      "N.Rujukan P.A.","J.S. Rmh Skt","Paket BHP","J.M. Perujuk","J.M. Dokter",
-                      "J.M. Laborat","K.S.O.","Menejemen","Biaya Item","",""};
+//        Object[] row={"Pemeriksaan","Satuan","N.Rujukan L.D.","N.Rujukan L.A.","N.Rujukan P.D.",
+//                      "N.Rujukan P.A.","J.S. Rmh Skt","Paket BHP","J.M. Perujuk","J.M. Dokter",
+//                      "J.M. Laborat","K.S.O.","Menejemen","Biaya Item","",""};
         tabMode=new DefaultTableModel(null,row){
              @Override public boolean isCellEditable(int rowIndex, int colIndex){
                 boolean a = true;
-                if (colIndex==13) {
-                    a=false;
+                if (colIndex == 37) {
+                    a = false;
                 }
+//                if (colIndex==13) {
+//                    a=false;
+//                }
                 return a;
              }
-             Class[] types = new Class[] {
-                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,
-                java.lang.Object.class,java.lang.Object.class,java.lang.Double.class,java.lang.Double.class,
-                java.lang.Double.class,java.lang.Double.class,java.lang.Double.class,java.lang.Double.class, 
-                java.lang.Double.class,java.lang.Double.class,java.lang.Object.class,java.lang.Object.class
-             };
+             Class[] types = new Class[]{
+                java.lang.Object.class,
+                java.lang.Object.class,
+                
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                java.lang.Object.class,
+                
+                java.lang.Double.class,
+                java.lang.Double.class,
+                java.lang.Double.class,
+                java.lang.Double.class,
+                java.lang.Double.class,
+                java.lang.Double.class,
+                java.lang.Double.class,
+                java.lang.Double.class,
+                java.lang.Object.class,
+                java.lang.Object.class
+            };
+//             Class[] types = new Class[] {
+//                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,
+//                java.lang.Object.class,java.lang.Object.class,java.lang.Double.class,java.lang.Double.class,
+//                java.lang.Double.class,java.lang.Double.class,java.lang.Double.class,java.lang.Double.class, 
+//                java.lang.Double.class,java.lang.Double.class,java.lang.Object.class,java.lang.Object.class
+//             };
              @Override
              public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
@@ -74,17 +162,28 @@ public final class DlgTemplateLaboratorium extends javax.swing.JDialog {
         //tbPenyakit.setDefaultRenderer(Object.class, new WarnaTable(panelJudul.getBackground(),tbPenyakit.getBackground()));
         tbKamar.setPreferredScrollableViewportSize(new Dimension(500,500));
         tbKamar.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 40; i++) {
             TableColumn column = tbKamar.getColumnModel().getColumn(i);
-            if(i==0){
+            if (i == 0) {
                 column.setPreferredWidth(180);
-            }else if((i==14)||(i==15)){
+            } else if ((i == 38) || (i == 39)) {
                 column.setMinWidth(0);
                 column.setMaxWidth(0);
-            }else {
+            } else {
                 column.setPreferredWidth(80);
             }
         }
+//        for (int i = 0; i < 16; i++) {
+//            TableColumn column = tbKamar.getColumnModel().getColumn(i);
+//            if(i==0){
+//                column.setPreferredWidth(180);
+//            }else if((i==14)||(i==15)){
+//                column.setMinWidth(0);
+//                column.setMaxWidth(0);
+//            }else {
+//                column.setPreferredWidth(80);
+//            }
+//        }
         tbKamar.setDefaultRenderer(Object.class, new WarnaTable());
         KdPeriksa.setDocument(new batasInput((byte)100).getKata(KdPeriksa));        
         
@@ -224,12 +323,21 @@ public final class DlgTemplateLaboratorium extends javax.swing.JDialog {
         if(KdPeriksa.getText().equals("")||NmPeriksa.getText().equals("")){
             Valid.textKosong(KdPeriksa,"Pemeriksaan");
         }else{
-            if(tbKamar.getSelectedRow()>-1){                
-                tabMode.insertRow(tbKamar.getSelectedRow(),new Object[]{"","","","","","",0,0,0,0,0,0,0,0,""});
-            }else{
-                tabMode.addRow(new Object[]{"","","","","","",0,0,0,0,0,0,0,0,"",""});
+            if (tbKamar.getSelectedRow() > -1) {
+                tabMode.insertRow(tbKamar.getSelectedRow(),new Object[]{"","","","","","","","","","","","","","","",
+                        "","","","","","","","","","","","","","","",0,0,0,0,0,0,0,0,""});
+            } else {
+                tabMode.addRow(
+                        new Object[]{"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",                            
+                            0,0,0,0,0,0,0,0,"",""});
                 tbKamar.requestFocus();
             }
+//            if(tbKamar.getSelectedRow()>-1){                
+//                tabMode.insertRow(tbKamar.getSelectedRow(),new Object[]{"","","","","","",0,0,0,0,0,0,0,0,""});
+//            }else{
+//                tabMode.addRow(new Object[]{"","","","","","",0,0,0,0,0,0,0,0,"",""});
+//                tbKamar.requestFocus();
+//            }
             urut();
         }
     }//GEN-LAST:event_BtnTambahActionPerformed
@@ -244,24 +352,78 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
              if(row>-1){
                  for(int i=0;i<row;i++){  
                      //System.out.println(tbKamar.getValueAt(i,0).toString());
-                    if(tbKamar.getValueAt(i,14).toString().equals("")){
-                         Sequel.menyimpan("template_laboratorium","?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?","Id Hasil Periksa",17,new String[]{
-                               KdPeriksa.getText(),"0",tbKamar.getValueAt(i,0).toString(),tbKamar.getValueAt(i,1).toString(),
-                               tbKamar.getValueAt(i,2).toString(),tbKamar.getValueAt(i,3).toString(),tbKamar.getValueAt(i,4).toString(),
-                               tbKamar.getValueAt(i,5).toString(),tbKamar.getValueAt(i,6).toString(),tbKamar.getValueAt(i,7).toString(),
-                               tbKamar.getValueAt(i,8).toString(),tbKamar.getValueAt(i,9).toString(),tbKamar.getValueAt(i,10).toString(),
-                               tbKamar.getValueAt(i,11).toString(),tbKamar.getValueAt(i,12).toString(),tbKamar.getValueAt(i,13).toString(),
-                               tbKamar.getValueAt(i,15).toString()       
-                         });
-                    }else if(!tbKamar.getValueAt(i,14).toString().equals("")){
-                         Sequel.mengedit("template_laboratorium","id_template=?","Pemeriksaan=?,satuan=?,nilai_rujukan_ld=?,nilai_rujukan_la=?,"+
-                               "nilai_rujukan_pd=?,nilai_rujukan_pa=?,bagian_rs=?,bhp=?,bagian_perujuk=?,bagian_dokter=?,bagian_laborat=?,kso=?,menejemen=?,biaya_item=?,urut=?",16,new String[]{
-                               tbKamar.getValueAt(i,0).toString(),tbKamar.getValueAt(i,1).toString(),tbKamar.getValueAt(i,2).toString(),tbKamar.getValueAt(i,3).toString(),
-                               tbKamar.getValueAt(i,4).toString(),tbKamar.getValueAt(i,5).toString(),tbKamar.getValueAt(i,6).toString(),tbKamar.getValueAt(i,7).toString(),
-                               tbKamar.getValueAt(i,8).toString(),tbKamar.getValueAt(i,9).toString(),tbKamar.getValueAt(i,10).toString(),tbKamar.getValueAt(i,11).toString(),
-                               tbKamar.getValueAt(i,12).toString(),tbKamar.getValueAt(i,13).toString(),tbKamar.getValueAt(i,15).toString(),tbKamar.getValueAt(i,14).toString()
-                         } );   
+                    if (tbKamar.getValueAt(i, 38).toString().equals("")) {
+                        Sequel.menyimpan("template_laboratorium", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "Id Hasil Periksa", 41, new String[]{
+                            KdPeriksa.getText(),"0",tbKamar.getValueAt(i, 0).toString(),tbKamar.getValueAt(i, 1).toString(),
+                            tbKamar.getValueAt(i, 2).toString(),tbKamar.getValueAt(i, 3).toString(),
+                            tbKamar.getValueAt(i, 4).toString(),tbKamar.getValueAt(i, 5).toString(),
+                            tbKamar.getValueAt(i, 6).toString(),tbKamar.getValueAt(i, 7).toString(),
+                            tbKamar.getValueAt(i, 8).toString(),tbKamar.getValueAt(i, 9).toString(),
+                            tbKamar.getValueAt(i, 10).toString(),tbKamar.getValueAt(i, 11).toString(),
+                            tbKamar.getValueAt(i, 12).toString(),tbKamar.getValueAt(i, 13).toString(),
+                            tbKamar.getValueAt(i, 14).toString(),tbKamar.getValueAt(i, 15).toString(),
+                            tbKamar.getValueAt(i, 16).toString(),tbKamar.getValueAt(i, 17).toString(),
+                            tbKamar.getValueAt(i, 18).toString(),tbKamar.getValueAt(i, 19).toString(),
+                            tbKamar.getValueAt(i, 20).toString(),tbKamar.getValueAt(i, 21).toString(),
+                            tbKamar.getValueAt(i, 22).toString(),tbKamar.getValueAt(i, 23).toString(),
+                            tbKamar.getValueAt(i, 24).toString(),tbKamar.getValueAt(i, 25).toString(),
+                            tbKamar.getValueAt(i, 26).toString(),tbKamar.getValueAt(i, 27).toString(),
+                            tbKamar.getValueAt(i, 28).toString(),tbKamar.getValueAt(i, 29).toString(),
+                            tbKamar.getValueAt(i, 30).toString(),tbKamar.getValueAt(i, 31).toString(),
+                            tbKamar.getValueAt(i, 32).toString(),tbKamar.getValueAt(i, 33).toString(),
+                            tbKamar.getValueAt(i, 34).toString(),tbKamar.getValueAt(i, 35).toString(),
+                            tbKamar.getValueAt(i, 36).toString(),tbKamar.getValueAt(i, 37).toString(),
+                            tbKamar.getValueAt(i, 39).toString()
+                        });
+                    } else if (!tbKamar.getValueAt(i, 38).toString().equals("")) {
+                        Sequel.mengedit("template_laboratorium", "id_template=?",
+                                "Pemeriksaan=?,satuan=?,bb_nilai_0_1h=?,ba_nilai_0_1h=?,bb_nilai_1_3h=?,ba_nilai_1_3h=?,"
+                                + "bb_nilai_3_7h=?,ba_nilai_3_7h=?,bb_nilai_7_14h=?,ba_nilai_7_14h=?,bb_nilai_14h_1b=?,"
+                                + "ba_nilai_14h_1b=?,bb_nilai_1_2b=?,ba_nilai_1_2b=?,bb_nilai_2_6b=?,ba_nilai_2_6b=?,"
+                                + "bb_nilai_6b_2t=?,ba_nilai_6b_2t=?,bb_nilai_2_6t=?,ba_nilai_2_6t=?,bb_nilai_6_12t=?,"
+                                + "ba_nilai_6_12t=?,bb_nilai_l_12_18t=?,ba_nilai_l_12_18t=?,bb_nilai_p_12_18t=?,ba_nilai_p_12_18t=?,"
+                                + "bb_nilai_l_18t=?,ba_nilai_l_18t=?,bb_nilai_p_18t=?,ba_nilai_p_18t=?,bagian_rs=?,bhp=?,"
+                                + "bagian_perujuk=?,bagian_dokter=?,bagian_laborat=?,kso=?,menejemen=?,biaya_item=?,"
+                                + "urut=?", 40, new String[]{tbKamar.getValueAt(i, 0).toString(),tbKamar.getValueAt(i, 1).toString(),
+                                    tbKamar.getValueAt(i, 2).toString(),tbKamar.getValueAt(i, 3).toString(),
+                                    tbKamar.getValueAt(i, 4).toString(),tbKamar.getValueAt(i, 5).toString(),
+                                    tbKamar.getValueAt(i, 6).toString(),tbKamar.getValueAt(i, 7).toString(),
+                                    tbKamar.getValueAt(i, 8).toString(),tbKamar.getValueAt(i, 9).toString(),
+                                    tbKamar.getValueAt(i, 10).toString(),tbKamar.getValueAt(i, 11).toString(),
+                                    tbKamar.getValueAt(i, 12).toString(),tbKamar.getValueAt(i, 13).toString(),
+                                    tbKamar.getValueAt(i, 14).toString(),tbKamar.getValueAt(i, 15).toString(),
+                                    tbKamar.getValueAt(i, 16).toString(),tbKamar.getValueAt(i, 17).toString(),
+                                    tbKamar.getValueAt(i, 18).toString(),tbKamar.getValueAt(i, 19).toString(),
+                                    tbKamar.getValueAt(i, 20).toString(),tbKamar.getValueAt(i, 21).toString(),
+                                    tbKamar.getValueAt(i, 22).toString(),tbKamar.getValueAt(i, 23).toString(),
+                                    tbKamar.getValueAt(i, 24).toString(),tbKamar.getValueAt(i, 25).toString(),
+                                    tbKamar.getValueAt(i, 26).toString(),tbKamar.getValueAt(i, 27).toString(),
+                                    tbKamar.getValueAt(i, 28).toString(),tbKamar.getValueAt(i, 29).toString(),
+                                    tbKamar.getValueAt(i, 30).toString(),tbKamar.getValueAt(i, 31).toString(),
+                                    tbKamar.getValueAt(i, 32).toString(),tbKamar.getValueAt(i, 33).toString(),
+                                    tbKamar.getValueAt(i, 34).toString(),tbKamar.getValueAt(i, 35).toString(),
+                                    tbKamar.getValueAt(i, 36).toString(),tbKamar.getValueAt(i, 37).toString(),
+                                    tbKamar.getValueAt(i, 39).toString(),tbKamar.getValueAt(i, 38).toString()
+                                });
                     }
+//                     if(tbKamar.getValueAt(i,14).toString().equals("")){
+//                         Sequel.menyimpan("template_laboratorium","?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?","Id Hasil Periksa",17,new String[]{
+//                               KdPeriksa.getText(),"0",tbKamar.getValueAt(i,0).toString(),tbKamar.getValueAt(i,1).toString(),
+//                               tbKamar.getValueAt(i,2).toString(),tbKamar.getValueAt(i,3).toString(),tbKamar.getValueAt(i,4).toString(),
+//                               tbKamar.getValueAt(i,5).toString(),tbKamar.getValueAt(i,6).toString(),tbKamar.getValueAt(i,7).toString(),
+//                               tbKamar.getValueAt(i,8).toString(),tbKamar.getValueAt(i,9).toString(),tbKamar.getValueAt(i,10).toString(),
+//                               tbKamar.getValueAt(i,11).toString(),tbKamar.getValueAt(i,12).toString(),tbKamar.getValueAt(i,13).toString(),
+//                               tbKamar.getValueAt(i,15).toString()       
+//                         });
+//                    }else if(!tbKamar.getValueAt(i,14).toString().equals("")){
+//                         Sequel.mengedit("template_laboratorium","id_template=?","Pemeriksaan=?,satuan=?,nilai_rujukan_ld=?,nilai_rujukan_la=?,"+
+//                               "nilai_rujukan_pd=?,nilai_rujukan_pa=?,bagian_rs=?,bhp=?,bagian_perujuk=?,bagian_dokter=?,bagian_laborat=?,kso=?,menejemen=?,biaya_item=?,urut=?",16,new String[]{
+//                               tbKamar.getValueAt(i,0).toString(),tbKamar.getValueAt(i,1).toString(),tbKamar.getValueAt(i,2).toString(),tbKamar.getValueAt(i,3).toString(),
+//                               tbKamar.getValueAt(i,4).toString(),tbKamar.getValueAt(i,5).toString(),tbKamar.getValueAt(i,6).toString(),tbKamar.getValueAt(i,7).toString(),
+//                               tbKamar.getValueAt(i,8).toString(),tbKamar.getValueAt(i,9).toString(),tbKamar.getValueAt(i,10).toString(),tbKamar.getValueAt(i,11).toString(),
+//                               tbKamar.getValueAt(i,12).toString(),tbKamar.getValueAt(i,13).toString(),tbKamar.getValueAt(i,15).toString(),tbKamar.getValueAt(i,14).toString()
+//                         } );   
+//                    }
                  }
                  tampil();
              }             
@@ -271,7 +433,8 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
 
 private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
    try{
-       Sequel.meghapus("template_laboratorium","id_template",tbKamar.getValueAt(tbKamar.getSelectedRow(),14).toString());
+//       Sequel.meghapus("template_laboratorium","id_template",tbKamar.getValueAt(tbKamar.getSelectedRow(),14).toString());
+       Sequel.meghapus("template_laboratorium","id_template",tbKamar.getValueAt(tbKamar.getSelectedRow(),38).toString());
        tabMode.removeRow(tbKamar.getSelectedRow());
        urut();
    }catch(Exception ex){
@@ -332,33 +495,70 @@ private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
     public void tampil() {
         Valid.tabelKosong(tabMode);
-        try{            
-            ps=koneksi.prepareStatement("select id_template, Pemeriksaan, satuan, nilai_rujukan_ld, nilai_rujukan_la, nilai_rujukan_pd,"+
-                        "nilai_rujukan_pa,bagian_rs,bhp,bagian_perujuk,bagian_dokter,bagian_laborat,kso,menejemen,biaya_item,urut "+
-                        "from template_laboratorium where kd_jenis_prw=? order by urut");
+        try{
+            ps = koneksi.prepareStatement("select id_template, Pemeriksaan, satuan, bb_nilai_0_1h, ba_nilai_0_1h, "
+                    + "bb_nilai_1_3h, ba_nilai_1_3h, bb_nilai_3_7h, ba_nilai_3_7h, bb_nilai_7_14h, ba_nilai_7_14h, "
+                    + "bb_nilai_14h_1b, ba_nilai_14h_1b, bb_nilai_1_2b, ba_nilai_1_2b, bb_nilai_2_6b, ba_nilai_2_6b, "
+                    + "bb_nilai_6b_2t, ba_nilai_6b_2t, bb_nilai_2_6t, ba_nilai_2_6t, bb_nilai_6_12t, ba_nilai_6_12t, "
+                    + "bb_nilai_l_12_18t, ba_nilai_l_12_18t, bb_nilai_p_12_18t, ba_nilai_p_12_18t, bb_nilai_l_18t, "
+                    + "ba_nilai_l_18t, bb_nilai_p_18t, ba_nilai_p_18t,bagian_rs,bhp,bagian_perujuk,bagian_dokter,"
+                    + "bagian_laborat,kso,menejemen,biaya_item,urut "
+                    + "from template_laboratorium where kd_jenis_prw=? order by urut");
             try {
-                ps.setString(1,KdPeriksa.getText());
-                rs=ps.executeQuery();
-                while(rs.next()){
-                    tabMode.addRow(new Object[]{
-                        rs.getString(2),rs.getString(3),rs.getString(4),
-                        rs.getString(5),rs.getString(6),rs.getString(7),
-                        rs.getDouble(8),rs.getDouble(9),rs.getDouble(10),
-                        rs.getDouble(11),rs.getDouble(12),rs.getDouble(13),
-                        rs.getDouble(14),rs.getDouble(15),rs.getString(1),""
+                ps.setString(1, KdPeriksa.getText());
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    tabMode.addRow(new Object[]{rs.getString(2),rs.getString(3),                        
+                        rs.getString(4),rs.getString(5),rs.getString(6),
+                        rs.getString(7),rs.getString(8),rs.getString(9),
+                        rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13),
+                        rs.getString(14),rs.getString(15),rs.getString(16),rs.getString(17),
+                        rs.getString(18),rs.getString(19),rs.getString(20),rs.getString(21),
+                        rs.getString(22),rs.getString(23),rs.getString(24),rs.getString(25),
+                        rs.getString(26),rs.getString(27),rs.getString(28),rs.getString(29),
+                        rs.getString(30),rs.getString(31),rs.getDouble(32),
+                        rs.getDouble(33),rs.getDouble(34),rs.getDouble(35),rs.getDouble(36),
+                        rs.getDouble(37),rs.getDouble(38),rs.getDouble(39),rs.getString(1),
+                        ""
                     });
                 }
                 urut();
             } catch (Exception e) {
                 System.out.println(e);
-            } finally{
-                if(rs!=null){
+            } finally {
+                if (rs != null) {
                     rs.close();
                 }
-                if(ps!=null){
+                if (ps != null) {
                     ps.close();
                 }
             }
+//            ps=koneksi.prepareStatement("select id_template, Pemeriksaan, satuan, nilai_rujukan_ld, nilai_rujukan_la, nilai_rujukan_pd,"+
+//                        "nilai_rujukan_pa,bagian_rs,bhp,bagian_perujuk,bagian_dokter,bagian_laborat,kso,menejemen,biaya_item,urut "+
+//                        "from template_laboratorium where kd_jenis_prw=? order by urut");
+//            try {
+//                ps.setString(1,KdPeriksa.getText());
+//                rs=ps.executeQuery();
+//                while(rs.next()){
+//                    tabMode.addRow(new Object[]{
+//                        rs.getString(2),rs.getString(3),rs.getString(4),
+//                        rs.getString(5),rs.getString(6),rs.getString(7),
+//                        rs.getDouble(8),rs.getDouble(9),rs.getDouble(10),
+//                        rs.getDouble(11),rs.getDouble(12),rs.getDouble(13),
+//                        rs.getDouble(14),rs.getDouble(15),rs.getString(1),""
+//                    });
+//                }
+//                urut();
+//            } catch (Exception e) {
+//                System.out.println(e);
+//            } finally{
+//                if(rs!=null){
+//                    rs.close();
+//                }
+//                if(ps!=null){
+//                    ps.close();
+//                }
+//            }
         }catch(Exception e){
             System.out.println("Notifikasi : "+e);
         }
@@ -367,21 +567,36 @@ private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private void getData() {
         int row=tbKamar.getSelectedRow();
         if(row!= -1){
-            if((!tbKamar.getValueAt(row,6).toString().equals(""))
-                    &&(!tbKamar.getValueAt(row,7).toString().equals(""))
-                    &&(!tbKamar.getValueAt(row,8).toString().equals(""))
-                    &&(!tbKamar.getValueAt(row,9).toString().equals(""))
-                    &&(!tbKamar.getValueAt(row,10).toString().equals(""))
-                    &&(!tbKamar.getValueAt(row,11).toString().equals(""))
-                    &&(!tbKamar.getValueAt(row,12).toString().equals(""))){
-               tbKamar.setValueAt(Valid.SetAngka(tbKamar.getValueAt(row,6).toString())+
-                       Valid.SetAngka(tbKamar.getValueAt(row,7).toString())+
-                       Valid.SetAngka(tbKamar.getValueAt(row,8).toString())+
-                       Valid.SetAngka(tbKamar.getValueAt(row,9).toString())+
-                       Valid.SetAngka(tbKamar.getValueAt(row,10).toString())+
-                       Valid.SetAngka(tbKamar.getValueAt(row,11).toString())+
-                       Valid.SetAngka(tbKamar.getValueAt(row,12).toString()), row,13); 
+            if ((!tbKamar.getValueAt(row, 30).toString().equals(""))
+                    && (!tbKamar.getValueAt(row, 31).toString().equals(""))
+                    && (!tbKamar.getValueAt(row, 32).toString().equals(""))
+                    && (!tbKamar.getValueAt(row, 33).toString().equals(""))
+                    && (!tbKamar.getValueAt(row, 34).toString().equals(""))
+                    && (!tbKamar.getValueAt(row, 35).toString().equals(""))
+                    && (!tbKamar.getValueAt(row, 36).toString().equals(""))) {
+                tbKamar.setValueAt(Valid.SetAngka(tbKamar.getValueAt(row, 30).toString())
+                        + Valid.SetAngka(tbKamar.getValueAt(row, 31).toString())
+                        + Valid.SetAngka(tbKamar.getValueAt(row, 32).toString())
+                        + Valid.SetAngka(tbKamar.getValueAt(row, 33).toString())
+                        + Valid.SetAngka(tbKamar.getValueAt(row, 34).toString())
+                        + Valid.SetAngka(tbKamar.getValueAt(row, 35).toString())
+                        + Valid.SetAngka(tbKamar.getValueAt(row, 36).toString()), row, 37);
             }
+//            if((!tbKamar.getValueAt(row,6).toString().equals(""))
+//                    &&(!tbKamar.getValueAt(row,7).toString().equals(""))
+//                    &&(!tbKamar.getValueAt(row,8).toString().equals(""))
+//                    &&(!tbKamar.getValueAt(row,9).toString().equals(""))
+//                    &&(!tbKamar.getValueAt(row,10).toString().equals(""))
+//                    &&(!tbKamar.getValueAt(row,11).toString().equals(""))
+//                    &&(!tbKamar.getValueAt(row,12).toString().equals(""))){
+//               tbKamar.setValueAt(Valid.SetAngka(tbKamar.getValueAt(row,6).toString())+
+//                       Valid.SetAngka(tbKamar.getValueAt(row,7).toString())+
+//                       Valid.SetAngka(tbKamar.getValueAt(row,8).toString())+
+//                       Valid.SetAngka(tbKamar.getValueAt(row,9).toString())+
+//                       Valid.SetAngka(tbKamar.getValueAt(row,10).toString())+
+//                       Valid.SetAngka(tbKamar.getValueAt(row,11).toString())+
+//                       Valid.SetAngka(tbKamar.getValueAt(row,12).toString()), row,13); 
+//            }
         }
     } 
     
@@ -396,7 +611,8 @@ private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     public void urut(){
         if(tbKamar.getRowCount()>-1){
             for(int i=0;i<tbKamar.getRowCount();i++){  
-                  tbKamar.setValueAt(i, i,15);
+//                  tbKamar.setValueAt(i, i,15);
+                  tbKamar.setValueAt(i, i, 39);
             }
         }
     }
