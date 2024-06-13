@@ -1098,7 +1098,7 @@ public class frmUtama extends javax.swing.JFrame {
         initComponents();
         initKhanza();
         setIconImage(new ImageIcon(super.getClass().getResource("/picture/yaski24.png")).getImage());
-        
+                
         this.setExtendedState(MAXIMIZED_BOTH);
         //this.setSize(screen.width,screen.height);
         edAdmin.setDocument(new batasInput((byte)100).getKata(edAdmin));
@@ -1694,6 +1694,7 @@ public class frmUtama extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JSeparator();
         BtnToolRegBooking = new widget.ButtonBig();
         BtnToolReg = new widget.ButtonBig();
+        bookingIGD = new widget.BadgeButton();
         btnToolIGD = new widget.ButtonBig();
         jSeparator5 = new javax.swing.JSeparator();
         btnToolLab = new widget.ButtonBig();
@@ -1987,7 +1988,7 @@ public class frmUtama extends javax.swing.JFrame {
 
         tanggal.setEditable(false);
         tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "28/05/2024" }));
+        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "05/06/2024" }));
         tanggal.setDisplayFormat("dd/MM/yyyy");
         tanggal.setName("tanggal"); // NOI18N
         tanggal.setOpaque(false);
@@ -7133,6 +7134,13 @@ public class frmUtama extends javax.swing.JFrame {
             }
         });
         internalFrame1.add(BtnToolReg);
+
+        bookingIGD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/noun-emergency-2415641(1).png"))); // NOI18N
+        bookingIGD.setToolTipText("");
+        bookingIGD.setEnabled(false);
+        bookingIGD.setLabel("");
+        bookingIGD.setName("bookingIGD"); // NOI18N
+        internalFrame1.add(bookingIGD);
 
         btnToolIGD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/noun-emergency-2415641(1).png"))); // NOI18N
         btnToolIGD.setMnemonic('D');
@@ -21570,6 +21578,7 @@ private void MnGantiPasswordBtnLogActionPerformed(java.awt.event.ActionEvent evt
     private usu.widget.glass.PanelGlass PanelWall;
     private widget.panelGlass Panelmenu;
     private widget.TextBox TCari;
+    private widget.BadgeButton bookingIGD;
     private widget.ButtonBig btnAdmin;
     private widget.ButtonBig btnAkunPiutang;
     private widget.ButtonBig btnAnalisaKamar;

@@ -3,18 +3,18 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * DlgPenyakit.java
  *
  * Created on May 23, 2010, 12:57:16 AM
  */
-
 package rekammedis;
 
 import fungsi.WarnaTable4;
 import fungsi.batasInput;
 import fungsi.koneksiDB;
 import fungsi.validasi;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -30,96 +30,107 @@ import javax.swing.table.TableColumn;
  * @author dosen
  */
 public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
+
     private final DefaultTableModel tabMode;
-    private validasi Valid=new validasi();
-    private Connection koneksi=koneksiDB.condb();
+    private validasi Valid = new validasi();
+    private Connection koneksi = koneksiDB.condb();
     private PreparedStatement ps;
     private ResultSet rs;
-    private String norm="",nip="";
-    private int z=0;
-    /** Creates new form DlgPenyakit
+    private String norm = "", nip = "";
+    private int z = 0;
+
+    /**
+     * Creates new form DlgPenyakit
+     *
      * @param parent
-     * @param modal */
+     * @param modal
+     */
     public RMCari5SOAPTerakhir(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setLocation(10,2);
-        setSize(656,250);
+        this.setLocation(10, 2);
+        setSize(656, 250);
 
 //        Object[] row={"Tanggal","Jam","Subjek","Objek","Asesmen","Plan","Instruksi","Evaluasi"};
-        Object[] row={"Tanggal","Jam","Subjek","Objek","Asesmen","Plan","Suhu","Tensi","Respirasi","Nadi","SpO2","GCS"};
-        tabMode=new DefaultTableModel(null,row){
-              @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
+        Object[] row = {"Tanggal", "Petugas", "", "Subjek", "Objek", "Asesmen", "Plan", "Suhu", "Tensi", "Respirasi", "Nadi", "SpO2", "GCS"};
+        tabMode = new DefaultTableModel(null, row) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false;
+            }
         };
         tbKamar.setModel(tabMode);
         //tbPenyakit.setDefaultRenderer(Object.class, new WarnaTable(panelJudul.getBackground(),tbPenyakit.getBackground()));
-        tbKamar.setPreferredScrollableViewportSize(new Dimension(500,500));
+        tbKamar.setPreferredScrollableViewportSize(new Dimension(500, 500));
         tbKamar.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        for (z= 0; z < 12; z++) {
+        for (z = 0; z < 13; z++) {
             TableColumn column = tbKamar.getColumnModel().getColumn(z);
-            if(z==0){
+            if (z == 0) {
                 column.setPreferredWidth(65);
-            }else if(z==1){
-                column.setPreferredWidth(50);
-            }else if(z==2){
+            } else if (z == 1) {
+                column.setPreferredWidth(90);
+            } else if (z == 2) {
+                column.setPreferredWidth(0);
+            } else if (z == 3) {
                 column.setPreferredWidth(220);
-            }else if(z==3){
+            } else if (z == 4) {
                 column.setPreferredWidth(220);
-            }else if(z==4){
+            } else if (z == 5) {
                 column.setPreferredWidth(220);
-            }else if(z==5){
+            } else if (z == 6) {
                 column.setPreferredWidth(220);
 //            }else if(z==6){
 //                column.setPreferredWidth(220);
 //            }else if(z==7){
 //                column.setPreferredWidth(220);
 //            }
-            }else if(z==6){
+            } else if (z == 7) {
                 column.setPreferredWidth(40);
-            }else if(z==7){
+            } else if (z == 8) {
                 column.setPreferredWidth(60);
-            }else if(z==8){
+            } else if (z == 9) {
                 column.setPreferredWidth(40);
-            }else if(z==9){
+            } else if (z == 10) {
                 column.setPreferredWidth(40);
-            }else if(z==10){
+            } else if (z == 11) {
                 column.setPreferredWidth(40);
-            }else if(z==11){
+            } else if (z == 12) {
                 column.setPreferredWidth(40);
             }
-            
+
         }
         tbKamar.setDefaultRenderer(Object.class, new WarnaTable4());
-        TCari.setDocument(new batasInput((byte)100).getKata(TCari));
-        if(koneksiDB.CARICEPAT().equals("aktif")){
-            TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener(){
+        TCari.setDocument(new batasInput((byte) 100).getKata(TCari));
+        if (koneksiDB.CARICEPAT().equals("aktif")) {
+            TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
                 @Override
                 public void insertUpdate(DocumentEvent e) {
-                    if(TCari.getText().length()>2){
+                    if (TCari.getText().length() > 2) {
                         tampil();
                     }
                 }
+
                 @Override
                 public void removeUpdate(DocumentEvent e) {
-                    if(TCari.getText().length()>2){
+                    if (TCari.getText().length() > 2) {
                         tampil();
                     }
                 }
+
                 @Override
                 public void changedUpdate(DocumentEvent e) {
-                    if(TCari.getText().length()>2){
+                    if (TCari.getText().length() > 2) {
                         tampil();
                     }
                 }
             });
         }
     }
-    
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -156,7 +167,7 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
         Scroll.setOpaque(true);
 
         tbKamar.setName("tbKamar"); // NOI18N
-        tbKamar.setRowHeight(85);
+        tbKamar.setRowHeight(5);
         tbKamar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tbKamarKeyPressed(evt);
@@ -261,13 +272,13 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
 
 
     private void TCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TCariKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             BtnCariActionPerformed(null);
-        }else if(evt.getKeyCode()==KeyEvent.VK_PAGE_DOWN){
+        } else if (evt.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
             BtnCari.requestFocus();
-        }else if(evt.getKeyCode()==KeyEvent.VK_PAGE_UP){
+        } else if (evt.getKeyCode() == KeyEvent.VK_PAGE_UP) {
             BtnKeluar.requestFocus();
-        }else if(evt.getKeyCode()==KeyEvent.VK_UP){
+        } else if (evt.getKeyCode() == KeyEvent.VK_UP) {
             tbKamar.requestFocus();
         }
 }//GEN-LAST:event_TCariKeyPressed
@@ -277,9 +288,9 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
 }//GEN-LAST:event_BtnCariActionPerformed
 
     private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnCariKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_SPACE){
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             BtnCariActionPerformed(null);
-        }else{
+        } else {
             Valid.pindah(evt, TCari, BtnAll);
         }
 }//GEN-LAST:event_BtnCariKeyPressed
@@ -290,9 +301,9 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
 }//GEN-LAST:event_BtnAllActionPerformed
 
     private void BtnAllKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnAllKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_SPACE){
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             BtnAllActionPerformed(null);
-        }else{
+        } else {
             Valid.pindah(evt, BtnCari, TCari);
         }
 }//GEN-LAST:event_BtnAllKeyPressed
@@ -306,10 +317,10 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowActivated
 
     private void tbKamarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbKamarKeyPressed
-        if(tabMode.getRowCount()!=0){
-            if(evt.getKeyCode()==KeyEvent.VK_SPACE){
+        if (tabMode.getRowCount() != 0) {
+            if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
                 dispose();
-            }else if(evt.getKeyCode()==KeyEvent.VK_SHIFT){
+            } else if (evt.getKeyCode() == KeyEvent.VK_SHIFT) {
                 TCari.setText("");
                 TCari.requestFocus();
             }
@@ -317,8 +328,8 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
     }//GEN-LAST:event_tbKamarKeyPressed
 
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
             RMCari5SOAPTerakhir dialog = new RMCari5SOAPTerakhir(new javax.swing.JFrame(), true);
@@ -350,93 +361,107 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
 
     private void tampil() {
         Valid.tabelKosong(tabMode);
-        if(Status.getSelectedIndex()==0){
-            try{
-                ps=koneksi.prepareStatement(
-                        "select pemeriksaan_ralan.tgl_perawatan,pemeriksaan_ralan.jam_rawat,pemeriksaan_ralan.keluhan,pemeriksaan_ralan.pemeriksaan,"+
-                        "pemeriksaan_ralan.penilaian,pemeriksaan_ralan.rtl,pemeriksaan_ralan.suhu_tubuh,pemeriksaan_ralan.tensi,pemeriksaan_ralan.respirasi,pemeriksaan_ralan.nadi,pemeriksaan_ralan.spo2,pemeriksaan_ralan.gcs "+
-                        "from pemeriksaan_ralan inner join reg_periksa on pemeriksaan_ralan.no_rawat=reg_periksa.no_rawat where "+
-                        "reg_periksa.no_rkm_medis=? and pemeriksaan_ralan.nip=? and "+
-                        "(pemeriksaan_ralan.keluhan like ? or pemeriksaan_ralan.pemeriksaan like ?) "+
-                        "order by pemeriksaan_ralan.tgl_perawatan desc,pemeriksaan_ralan.jam_rawat desc limit 5");
-                try{
-                    ps.setString(1,norm);
-                    ps.setString(2,nip);
-                    ps.setString(3,"%"+TCari.getText().trim()+"%");
-                    ps.setString(4,"%"+TCari.getText().trim()+"%");
-                    rs=ps.executeQuery();
-                    while(rs.next()){
-                        tabMode.addRow(new String[] {
-                            rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),
-                            rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),
-                            rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12)
+        if (Status.getSelectedIndex() == 0) {
+            try {
+                ps = koneksi.prepareStatement(
+                        "select pemeriksaan_ralan.tgl_perawatan,pemeriksaan_ralan.jam_rawat,pegawai.nama,pegawai.jbtn,pemeriksaan_ralan.keluhan,pemeriksaan_ralan.pemeriksaan,"
+                        + "pemeriksaan_ralan.penilaian,pemeriksaan_ralan.rtl,pemeriksaan_ralan.suhu_tubuh,pemeriksaan_ralan.tensi,pemeriksaan_ralan.respirasi,pemeriksaan_ralan.nadi,pemeriksaan_ralan.spo2,pemeriksaan_ralan.gcs "
+                        + "from pemeriksaan_ralan inner join reg_periksa on pemeriksaan_ralan.no_rawat=reg_periksa.no_rawat join pegawai on pemeriksaan_ralan.nip=pegawai.nik where "
+                        + "reg_periksa.no_rkm_medis=? and "
+                        + "(pemeriksaan_ralan.keluhan like ? or pemeriksaan_ralan.pemeriksaan like ?) "
+                        + "order by pemeriksaan_ralan.tgl_perawatan desc,pemeriksaan_ralan.jam_rawat desc limit 10");
+                try {
+                    ps.setString(1, norm);
+//                    ps.setString(2,nip);
+                    ps.setString(2, "%" + TCari.getText().trim() + "%");
+                    ps.setString(3, "%" + TCari.getText().trim() + "%");
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        tabMode.addRow(new String[]{
+                            rs.getString(1) + " " + rs.getString(2), rs.getString(3), rs.getString(4),
+                            rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),
+                            rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12),
+                            rs.getString(13), rs.getString(14)
                         });
                     }
-                }catch(Exception ex){
+                } catch (Exception ex) {
                     System.out.println(ex);
-                }finally{
-                    if(rs!=null){
+                } finally {
+                    if (rs != null) {
                         rs.close();
                     }
-                    if(ps!=null){
+                    if (ps != null) {
                         ps.close();
                     }
                 }
-            }catch(Exception e){
-                System.out.println("Notifikasi : "+e);
+            } catch (Exception e) {
+                System.out.println("Notifikasi : " + e);
             }
-        }else{
-            try{
-                ps=koneksi.prepareStatement(
-                        "select pemeriksaan_ranap.tgl_perawatan,pemeriksaan_ranap.jam_rawat,pemeriksaan_ranap.keluhan,pemeriksaan_ranap.pemeriksaan,"+
-                        "pemeriksaan_ranap.penilaian,pemeriksaan_ranap.rtl,pemeriksaan_ranap.suhu_tubuh,pemeriksaan_ranap.tensi,pemeriksaan_ranap.respirasi,pemeriksaan_ranap.nadi,pemeriksaan_ranap.spo2,pemeriksaan_ranap.gcs "+
-                        "from pemeriksaan_ranap inner join reg_periksa on pemeriksaan_ranap.no_rawat=reg_periksa.no_rawat join pegawai on pemeriksaan_ranap.nip=pegawai.nik where "+
-                        "reg_periksa.no_rkm_medis=? and pegawai.jbtn like ? and "+
-                        "(pemeriksaan_ranap.keluhan like ? or pemeriksaan_ranap.pemeriksaan like ?) "+
-                        "order by pemeriksaan_ranap.tgl_perawatan desc,pemeriksaan_ranap.jam_rawat desc limit 10");
-                try{
-                    ps.setString(1,norm);
-                    ps.setString(2,"Dokter%");
-                    ps.setString(3,"%"+TCari.getText().trim()+"%");
-                    ps.setString(4,"%"+TCari.getText().trim()+"%");
-                    rs=ps.executeQuery();
-                    while(rs.next()){
-                        tabMode.addRow(new String[] {
-                            rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),
-                            rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),
-                            rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12)
+        } else {
+            try {
+                ps = koneksi.prepareStatement(
+                        "select pemeriksaan_ranap.tgl_perawatan,pemeriksaan_ranap.jam_rawat,pegawai.nama,pegawai.jbtn,pemeriksaan_ranap.keluhan,pemeriksaan_ranap.pemeriksaan,"
+                        + "pemeriksaan_ranap.penilaian,pemeriksaan_ranap.rtl,pemeriksaan_ranap.suhu_tubuh,pemeriksaan_ranap.tensi,pemeriksaan_ranap.respirasi,pemeriksaan_ranap.nadi,pemeriksaan_ranap.spo2,pemeriksaan_ranap.gcs "
+                        + "from pemeriksaan_ranap inner join reg_periksa on pemeriksaan_ranap.no_rawat=reg_periksa.no_rawat join pegawai on pemeriksaan_ranap.nip=pegawai.nik where "
+                        + "reg_periksa.no_rkm_medis=? and "
+                        + "(pemeriksaan_ranap.keluhan like ? or pemeriksaan_ranap.pemeriksaan like ?) "
+                        + "order by pemeriksaan_ranap.tgl_perawatan desc,pemeriksaan_ranap.jam_rawat desc limit 25");
+                try {
+                    ps.setString(1, norm);
+//                    ps.setString(2,"Dokter%");
+                    ps.setString(2, "%" + TCari.getText().trim() + "%");
+                    ps.setString(3, "%" + TCari.getText().trim() + "%");
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        tabMode.addRow(new String[]{
+                            rs.getString(1) + " " + rs.getString(2), rs.getString(3), rs.getString(4),
+                            rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),
+                            rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12),
+                            rs.getString(13), rs.getString(14)
                         });
                     }
-                }catch(Exception ex){
+                } catch (Exception ex) {
                     System.out.println(ex);
-                }finally{
-                    if(rs!=null){
+                } finally {
+                    if (rs != null) {
                         rs.close();
                     }
-                    if(ps!=null){
+                    if (ps != null) {
                         ps.close();
                     }
                 }
-            }catch(Exception e){
-                System.out.println("Notifikasi : "+e);
+            } catch (Exception e) {
+                System.out.println("Notifikasi : " + e);
             }
         }
-        LCount.setText(""+tabMode.getRowCount());
+        LCount.setText("" + tabMode.getRowCount());
+        updateRowHeights();
     }
 
-    private void emptTeks() {   
+    private void emptTeks() {
         TCari.requestFocus();
     }
-    
-    public void setNoRM(String norm,String nip,String status){
-        this.norm=norm;
-        this.nip=nip;
+
+    public void setNoRM(String norm, String nip, String status) {
+        this.norm = norm;
+        this.nip = nip;
         Status.setSelectedItem(status);
         tampil();
     }
 
-    public JTable getTable(){
+    public JTable getTable() {
         return tbKamar;
     }
-    
+
+    private void updateRowHeights() {
+        for (int row = 0; row < tbKamar.getRowCount(); row++) {
+            int rowHeight = tbKamar.getRowHeight();
+            for (int column = 0; column < tbKamar.getColumnCount(); column++) {
+                Component comp = tbKamar.prepareRenderer(tbKamar.getCellRenderer(row, column), row, column);
+                rowHeight = Math.max(rowHeight, comp.getPreferredSize().height);
+            }
+            tbKamar.setRowHeight(row, rowHeight);
+        }
+    }
+
 }
