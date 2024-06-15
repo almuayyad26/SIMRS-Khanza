@@ -57,6 +57,7 @@ import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -188,8 +189,8 @@ public class DlgKamarInap extends javax.swing.JDialog {
     private Date date = new Date();
     private String now = dateFormat.format(date), kmr = "", key = "", tglmasuk, jammasuk, kd_pj,
             hariawal = "", pilihancetak = "", aktifkan_hapus_data_salah = "", terbitsep = "", namadokter = "", pjawab;
-    private PreparedStatement ps, pssetjam, pscaripiutang, psdiagnosa, psibu, psanak, pstarif, psdpjp, pscariumur;
-    private ResultSet rs, rs2, rssetjam;
+    private PreparedStatement ps, pssetjam, pscaripiutang, psdiagnosa, psibu, psanak, pstarif, psdpjp, pscariumur,pskontrolbpjs,pskontrolumum,pskontrolumumpoli,psreseppulang,pslama;
+    private ResultSet rs, rs2, rssetjam, rs3, rs4, rs5, rs6;
     private int i, row = 0;
     private double lama = 0, persenbayi = 0, hargakamar = 0;
     private String gabungkan = "", norawatgabung = "", kamaryangdigabung = "", dokterranap = "", bangsal = "", diagnosa_akhir = "", namakamar = "", umur = "0", sttsumur = "Th", order = "order by bangsal.nm_bangsal,kamar_inap.tgl_masuk,kamar_inap.jam_masuk";
@@ -12054,7 +12055,12 @@ public class DlgKamarInap extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_MnPenilaianFisioterapiActionPerformed
 
+    String penjab="",polikontrol="",dokterkontrol="",tglkontrol="",nosuratkontrol="";
+    String polikontrolumum="",dokterkontrolumum="",tglkontrolumum="",nosuratkontrolumum="";
+    
+    
     private void MnRingkasanMasukKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnRingkasanMasukKeluarActionPerformed
+        int lamadirawat=0;
         if (tabMode.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Maaf, table masih kosong...!!!!");
             TCari.requestFocus();
@@ -12085,7 +12091,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
                                 param.put("agama", Sequel.cariIsi("select pasien.agama from pasien where pasien.no_rkm_medis=?", rs2.getString("no_rkm_medis")));
                                 param.put("bangsa", "Jawa/Indonesia");
                                 param.put("pekerjaan", Sequel.cariIsi("select pasien.agama from pasien where pasien.no_rkm_medis=?", rs2.getString("no_rkm_medis")));
-                                param.put("status", "Single");
+                                param.put("status", "BELUM MENIKAH");
                                 param.put("alamat", tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 3).toString());
                                 param.put("keluarga", Sequel.cariIsi("select pasien.namakeluarga from pasien where pasien.no_rkm_medis=?", rs2.getString("no_rkm_medis")));
                                 param.put("telp", Sequel.cariIsi("select pasien.no_tlp from pasien where pasien.no_rkm_medis=?", rs2.getString("no_rkm_medis")));
@@ -12145,51 +12151,179 @@ public class DlgKamarInap extends javax.swing.JDialog {
                     if (TNoRMCari.getText().trim().equals("")) {
                         JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu pasien...!!!");
                     } else {
+                        try {
+                            pskontrolbpjs = koneksi.prepareStatement(
+                                "select bridging_surat_kontrol_bpjs.tgl_rencana,bridging_surat_kontrol_bpjs.nm_dokter_bpjs,bridging_surat_kontrol_bpjs.nm_poli_bpjs,bridging_surat_kontrol_bpjs.no_surat from bridging_surat_kontrol_bpjs left join bridging_sep on bridging_sep.no_sep=bridging_surat_kontrol_bpjs.no_sep where bridging_sep.no_rawat=?");                           
+                        } catch (Exception e) {
+                        }
+                        
+                        try {
+                            pskontrolbpjs.setString(1, TNoRwCari.getText());
+                            rs2 = pskontrolbpjs.executeQuery();
+                            
+                            if (rs2.next()) {
+                                tglkontrol=rs2.getString("tgl_rencana");
+                                dokterkontrol=rs2.getString("nm_dokter_bpjs");
+                                polikontrol=rs2.getString("nm_poli_bpjs");
+                                nosuratkontrol=rs2.getString("no_surat");
+                            }
+                        } catch (Exception e) {
+                        }
+                        
+                        try {
+                            pskontrolumum = koneksi.prepareStatement(
+                                "select skdp_bpjs.tanggal_datang, dokter.nm_dokter, skdp_bpjs.no_antrian from skdp_bpjs inner join dokter on skdp_bpjs.kd_dokter=dokter.kd_dokter where skdp_bpjs.no_rkm_medis=? order by tanggal_datang desc limit 1");
+                        } catch (Exception e) {
+                        }
+                        
+                        try {
+                            pskontrolumum.setString(1, TNoRMCari.getText());
+                            rs3 = pskontrolumum.executeQuery();
+                            
+                            if (rs3.next()) {
+                                tglkontrolumum=rs3.getString("tanggal_datang").substring(0,10);
+                                dokterkontrolumum=rs3.getString("nm_dokter");
+                                nosuratkontrolumum=rs3.getString("no_antrian");
+                            }
+                        } catch (Exception e) {
+                        }
+                        
+                        try {
+                            pskontrolumumpoli = koneksi.prepareStatement(
+                                "select poliklinik.nm_poli from poliklinik inner join jadwal on poliklinik.kd_poli=jadwal.kd_poli where jadwal.kd_dokter=? ");
+                        } catch (Exception e) {
+                        }
+                        
+                        try {
+                            pskontrolumumpoli.setString(1, Sequel.cariIsi("select kd_dokter from dpjp_ranap where no_rawat=?",TNoRwCari.getText()));
+                            rs4 = pskontrolumumpoli.executeQuery();
+                            
+                            if (rs4.next()) {
+                                polikontrolumum=rs4.getString("nm_poli");
+                            }
+                        } catch (Exception e) {
+                        }
+                        
+                                                
                         Map<String, Object> param = new HashMap<>();
                         param.put("nama", TPasienCari.getText());
                         param.put("jkel", Sequel.cariIsi("select if(pasien.jk='L','Laki-Laki','Perempuan') from pasien where pasien.no_rkm_medis=?", TNoRMCari.getText()));
                         param.put("lahir", Sequel.cariIsi("select DATE_FORMAT(pasien.tgl_lahir,'%d-%m-%Y') from pasien where pasien.no_rkm_medis=?", TNoRMCari.getText()));
                         param.put("norm", TNoRMCari.getText());
-                        param.put("ruang", tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 7).toString().replaceAll("  ", " "));
+                        param.put("ruang", Sequel.cariIsi("select bangsal.nm_bangsal from kamar_inap inner join kamar on kamar_inap.kd_kamar=kamar.kd_kamar inner join bangsal on kamar.kd_bangsal=bangsal.kd_bangsal where kamar_inap.no_rawat=? order by tgl_masuk asc",TNoRwCari.getText()));
+                        param.put("ruangkeluar", Sequel.cariIsi("select bangsal.nm_bangsal from kamar_inap inner join kamar on kamar_inap.kd_kamar=kamar.kd_kamar inner join bangsal on kamar.kd_bangsal=bangsal.kd_bangsal where kamar_inap.no_rawat=? order by tgl_masuk desc",TNoRwCari.getText()));
                         param.put("kelas", Sequel.cariIsi("select kamar.kelas from kamar inner join bangsal on kamar.kd_bangsal=bangsal.kd_bangsal where kamar.kd_kamar=? ", tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 19).toString()));
-                        param.put("tanggaldaftar", Sequel.cariIsi("select DATE_FORMAT(reg_periksa.tgl_registrasi,'%d-%m-%Y') from reg_periksa where reg_periksa.no_rawat=?", TNoRwCari.getText()));
-                        param.put("jamdaftar", Sequel.cariIsi("select reg_periksa.jam_reg from reg_periksa where reg_periksa.no_rawat=?", TNoRwCari.getText()));
-                        param.put("noreg", Sequel.cariIsi("select reg_periksa.no_reg from reg_periksa where reg_periksa.no_rawat=?", TNoRwCari.getText()));
-                        param.put("pendidikan", Sequel.cariIsi("select pasien.pnd from pasien where pasien.no_rkm_medis=?", TNoRMCari.getText()));
-                        param.put("agama", Sequel.cariIsi("select pasien.agama from pasien where pasien.no_rkm_medis=?", TNoRMCari.getText()));
-                        param.put("bangsa", "Jawa/Indonesia");
-                        param.put("pekerjaan", Sequel.cariIsi("select pasien.agama from pasien where pasien.no_rkm_medis=?", TNoRMCari.getText()));
-                        param.put("status", Sequel.cariIsi("select pasien.stts_nikah from pasien where pasien.no_rkm_medis=?", TNoRMCari.getText()));
+//                        param.put("tanggaldaftar", Sequel.cariIsi("select DATE_FORMAT(reg_periksa.tgl_registrasi,'%d-%m-%Y') from reg_periksa where reg_periksa.no_rawat=?", TNoRwCari.getText()));
+//                        param.put("jamdaftar", Sequel.cariIsi("select reg_periksa.jam_reg from reg_periksa where reg_periksa.no_rawat=?", TNoRwCari.getText()));
+//                        param.put("noreg", Sequel.cariIsi("select reg_periksa.no_reg from reg_periksa where reg_periksa.no_rawat=?", TNoRwCari.getText()));
+//                        param.put("pendidikan", Sequel.cariIsi("select pasien.pnd from pasien where pasien.no_rkm_medis=?", TNoRMCari.getText()));
+//                        param.put("agama", Sequel.cariIsi("select pasien.agama from pasien where pasien.no_rkm_medis=?", TNoRMCari.getText()));
+//                        param.put("bangsa", "Jawa/Indonesia");
+//                        param.put("pekerjaan", Sequel.cariIsi("select pasien.agama from pasien where pasien.no_rkm_medis=?", TNoRMCari.getText()));
+//                        param.put("status", Sequel.cariIsi("select pasien.stts_nikah from pasien where pasien.no_rkm_medis=?", TNoRMCari.getText()));
                         param.put("alamat", tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 3).toString());
-                        param.put("keluarga", Sequel.cariIsi("select pasien.namakeluarga from pasien where pasien.no_rkm_medis=?", TNoRMCari.getText()));
+                        param.put("namakeluarga", tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 4).toString());
+                        param.put("keluarga", tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 5).toString());
                         param.put("telp", Sequel.cariIsi("select pasien.no_tlp from pasien where pasien.no_rkm_medis=?", TNoRMCari.getText()));
-                        param.put("rujukandari", Sequel.cariIsi("select rujuk_masuk.perujuk from rujuk_masuk where rujuk_masuk.no_rawat=?", TNoRwCari.getText()));
-                        param.put("chkri", Sequel.cariIsi("select if(count(kamar_inap.no_rawat)>1,'V','') from reg_periksa inner join pasien inner join kamar_inap "
-                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis and reg_periksa.no_rawat=kamar_inap.no_rawat where reg_periksa.no_rkm_medis=? ", TNoRMCari.getText()));
-                        param.put("chkrj", Sequel.cariIsi("select if(count(reg_periksa.no_rawat)>1,'V','') from reg_periksa inner join pasien "
-                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis where reg_periksa.no_rkm_medis=? ", TNoRMCari.getText()));
-                        param.put("riterakhir", Sequel.cariIsi("select if(count(kamar_inap.no_rawat)>1,DATE_FORMAT(kamar_inap.tgl_keluar,'%d-%m-%Y'),'') from reg_periksa inner join pasien inner join kamar_inap "
-                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis and reg_periksa.no_rawat=kamar_inap.no_rawat where reg_periksa.no_rkm_medis=? order by kamar_inap.tgl_masuk desc limit 1", TNoRMCari.getText()));
-                        param.put("rjterakhir", Sequel.cariIsi("select if(count(reg_periksa.no_rawat)>1,DATE_FORMAT(reg_periksa.tgl_registrasi,'%d-%m-%Y'),'') from reg_periksa inner join pasien "
-                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis where reg_periksa.no_rkm_medis=? order by reg_periksa.tgl_registrasi desc ", TNoRMCari.getText()));
-                        param.put("rike", Sequel.cariIsi("select if(count(kamar_inap.no_rawat)>1,(count(kamar_inap.no_rawat)-1),'') from reg_periksa inner join pasien inner join kamar_inap "
-                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis and reg_periksa.no_rawat=kamar_inap.no_rawat where reg_periksa.no_rkm_medis=? ", TNoRMCari.getText()));
-                        param.put("rjke", Sequel.cariIsi("select if(count(reg_periksa.no_rawat)>1,(count(reg_periksa.no_rawat)-1),'') from reg_periksa inner join pasien "
-                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis where reg_periksa.no_rkm_medis=? ", TNoRMCari.getText()));
-                        param.put("riruang", Sequel.cariIsi("select if(count(kamar_inap.no_rawat)>1,kamar_inap.kd_kamar,'') from reg_periksa inner join pasien inner join kamar_inap "
-                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis and reg_periksa.no_rawat=kamar_inap.no_rawat where reg_periksa.no_rkm_medis=? order by kamar_inap.tgl_masuk desc limit 1", TNoRMCari.getText()));
-                        param.put("rjruang", Sequel.cariIsi("select if(count(reg_periksa.no_rawat)>1,kd_poli,'') from reg_periksa inner join pasien "
-                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis where reg_periksa.no_rkm_medis=? order by reg_periksa.tgl_registrasi desc ", TNoRMCari.getText()));
-                        param.put("chkruang", Sequel.cariIsi("select if(count(kamar_inap.no_rawat)>1,'V','') from reg_periksa inner join pasien inner join kamar_inap "
-                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis and reg_periksa.no_rawat=kamar_inap.no_rawat where reg_periksa.no_rkm_medis=? order by kamar_inap.tgl_masuk desc limit 1", TNoRMCari.getText()));
-                        param.put("chkbangsal", Sequel.cariIsi("select if(count(reg_periksa.no_rawat)>1,'V','') from reg_periksa inner join pasien "
-                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis where reg_periksa.no_rkm_medis=? order by reg_periksa.tgl_registrasi desc ", TNoRMCari.getText()));
-                        param.put("chkkelri", Sequel.cariIsi("select if(count(kamar_inap.no_rawat)>1,'V','') from reg_periksa inner join pasien inner join kamar_inap "
-                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis and reg_periksa.no_rawat=kamar_inap.no_rawat where reg_periksa.no_rkm_medis=? order by kamar_inap.tgl_masuk desc limit 1", TNoRMCari.getText()));
-                        param.put("chkkelrj", Sequel.cariIsi("select if(count(reg_periksa.no_rawat)>1,'V','') from reg_periksa inner join pasien "
-                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis where reg_periksa.no_rkm_medis=? order by reg_periksa.tgl_registrasi desc ", TNoRMCari.getText()));
-                        param.put("petugas", Sequel.cariIsi("select petugas.nama from petugas where petugas.nip=?", akses.getkode()));
+                        param.put("png_jawab", tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 6).toString());
+                        param.put("no_peserta", Sequel.cariIsi("select no_peserta from pasien where no_rkm_medis=?",TNoRMCari.getText()));
+                        param.put("nik", Sequel.cariIsi("select no_ktp from pasien where no_rkm_medis=?",TNoRMCari.getText()));
+                        
+//                        param.put("rujukandari", Sequel.cariIsi("select rujuk_masuk.perujuk from rujuk_masuk where rujuk_masuk.no_rawat=?", TNoRwCari.getText()));
+//                        param.put("chkri", Sequel.cariIsi("select if(count(kamar_inap.no_rawat)>1,'V','') from reg_periksa inner join pasien inner join kamar_inap "
+//                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis and reg_periksa.no_rawat=kamar_inap.no_rawat where reg_periksa.no_rkm_medis=? ", TNoRMCari.getText()));
+//                        param.put("chkrj", Sequel.cariIsi("select if(count(reg_periksa.no_rawat)>1,'V','') from reg_periksa inner join pasien "
+//                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis where reg_periksa.no_rkm_medis=? ", TNoRMCari.getText()));
+//                        param.put("riterakhir", Sequel.cariIsi("select if(count(kamar_inap.no_rawat)>1,DATE_FORMAT(kamar_inap.tgl_keluar,'%d-%m-%Y'),'') from reg_periksa inner join pasien inner join kamar_inap "
+//                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis and reg_periksa.no_rawat=kamar_inap.no_rawat where reg_periksa.no_rkm_medis=? order by kamar_inap.tgl_masuk desc limit 1", TNoRMCari.getText()));
+//                        param.put("rjterakhir", Sequel.cariIsi("select if(count(reg_periksa.no_rawat)>1,DATE_FORMAT(reg_periksa.tgl_registrasi,'%d-%m-%Y'),'') from reg_periksa inner join pasien "
+//                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis where reg_periksa.no_rkm_medis=? order by reg_periksa.tgl_registrasi desc ", TNoRMCari.getText()));
+//                        param.put("rike", Sequel.cariIsi("select if(count(kamar_inap.no_rawat)>1,(count(kamar_inap.no_rawat)-1),'') from reg_periksa inner join pasien inner join kamar_inap "
+//                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis and reg_periksa.no_rawat=kamar_inap.no_rawat where reg_periksa.no_rkm_medis=? ", TNoRMCari.getText()));
+//                        param.put("rjke", Sequel.cariIsi("select if(count(reg_periksa.no_rawat)>1,(count(reg_periksa.no_rawat)-1),'') from reg_periksa inner join pasien "
+//                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis where reg_periksa.no_rkm_medis=? ", TNoRMCari.getText()));
+//                        param.put("riruang", Sequel.cariIsi("select if(count(kamar_inap.no_rawat)>1,kamar_inap.kd_kamar,'') from reg_periksa inner join pasien inner join kamar_inap "
+//                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis and reg_periksa.no_rawat=kamar_inap.no_rawat where reg_periksa.no_rkm_medis=? order by kamar_inap.tgl_masuk desc limit 1", TNoRMCari.getText()));
+//                        param.put("rjruang", Sequel.cariIsi("select if(count(reg_periksa.no_rawat)>1,kd_poli,'') from reg_periksa inner join pasien "
+//                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis where reg_periksa.no_rkm_medis=? order by reg_periksa.tgl_registrasi desc ", TNoRMCari.getText()));
+//                        param.put("chkruang", Sequel.cariIsi("select if(count(kamar_inap.no_rawat)>1,'V','') from reg_periksa inner join pasien inner join kamar_inap "
+//                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis and reg_periksa.no_rawat=kamar_inap.no_rawat where reg_periksa.no_rkm_medis=? order by kamar_inap.tgl_masuk desc limit 1", TNoRMCari.getText()));
+//                        param.put("chkbangsal", Sequel.cariIsi("select if(count(reg_periksa.no_rawat)>1,'V','') from reg_periksa inner join pasien "
+//                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis where reg_periksa.no_rkm_medis=? order by reg_periksa.tgl_registrasi desc ", TNoRMCari.getText()));
+//                        param.put("chkkelri", Sequel.cariIsi("select if(count(kamar_inap.no_rawat)>1,'V','') from reg_periksa inner join pasien inner join kamar_inap "
+//                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis and reg_periksa.no_rawat=kamar_inap.no_rawat where reg_periksa.no_rkm_medis=? order by kamar_inap.tgl_masuk desc limit 1", TNoRMCari.getText()));
+//                        param.put("chkkelrj", Sequel.cariIsi("select if(count(reg_periksa.no_rawat)>1,'V','') from reg_periksa inner join pasien "
+//                                + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis where reg_periksa.no_rkm_medis=? order by reg_periksa.tgl_registrasi desc ", TNoRMCari.getText()));
+//                        param.put("petugas", Sequel.cariIsi("select petugas.nama from petugas where petugas.nip=?", akses.getkode()));
+                        param.put("dokter", Sequel.cariIsi("select dokter.nm_dokter from dpjp_ranap inner join dokter on dpjp_ranap.kd_dokter=dokter.kd_dokter where dpjp_ranap.no_rawat=?",TNoRwCari.getText()));
+                        param.put("dokter_igd", Sequel.cariIsi("select dokter.nm_dokter from penilaian_medis_igd inner join dokter on penilaian_medis_igd.kd_dokter=dokter.kd_dokter where penilaian_medis_igd.no_rawat=?",TNoRwCari.getText()));
+                        param.put("tgl_masuk",Sequel.cariIsi("select tgl_masuk from kamar_inap where no_rawat=? order by tgl_masuk asc",TNoRwCari.getText()));
+                        param.put("tgl_keluar",Sequel.cariIsi("select tgl_keluar from kamar_inap where no_rawat=? order by tgl_keluar desc",TNoRwCari.getText()));
+                        param.put("jam_masuk",Sequel.cariIsi("select jam_masuk from kamar_inap where no_rawat=? order by tgl_masuk asc",TNoRwCari.getText()));
+                        param.put("jam_keluar",Sequel.cariIsi("select jam_keluar from kamar_inap where no_rawat=? order by tgl_keluar desc, jam_keluar desc",TNoRwCari.getText()));
+                        param.put("diagnosa_awal",tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 9).toString());
+                        param.put("diagnosa_akhir",tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 10).toString());
+//                        param.put("lama",tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 17).toString());
+                        param.put("stts_pulang",Sequel.cariIsi("select stts_pulang from kamar_inap where no_rawat=? order by tgl_keluar desc",TNoRwCari.getText()));
+//                        param.put("resep_pulang", Sequel.cariIsi("select concat(databarang.nama_brng,' ',resep_pulang.dosis) from resep_pulang inner join databarang on resep_pulang.kode_brng=databarang.kode_brng and resep_pulang.no_rawat=?",TNoRwCari.getText()));
 
+
+                        try {
+                            pslama = koneksi.prepareStatement(
+                                "select lama from kamar_inap where no_rawat=?");
+                        } catch (Exception e) {
+                        }
+                                                
+                        try {
+                            pslama.setString(1, TNoRwCari.getText());
+                            rs6 = pslama.executeQuery();
+                            
+                            while(rs6.next()) {
+                                lamadirawat = lamadirawat+rs6.getInt("lama");
+                            }
+                        } catch (Exception e) {
+                        }
+                        
+                        param.put("lama",lamadirawat);
+
+                        penjab=tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 6).toString();
+                        if(penjab.equals("UMUM")){
+                            param.put("tgl_kontrol",tglkontrolumum);
+                            param.put("dokter_kontrol",dokterkontrolumum.toUpperCase());
+                            param.put("poli_kontrol",polikontrolumum.toUpperCase());
+                            param.put("surat_kontrol",nosuratkontrolumum.toUpperCase());
+                        }else{
+                            param.put("tgl_kontrol",tglkontrol);
+                            param.put("dokter_kontrol",dokterkontrol.toUpperCase());
+                            param.put("poli_kontrol","POLI SPESIALIS "+polikontrol.toUpperCase());
+                            param.put("surat_kontrol",nosuratkontrol.toUpperCase());
+                        }
+                        
+                        try {
+                            psreseppulang = koneksi.prepareStatement(
+                                "select concat(databarang.nama_brng,' ',resep_pulang.dosis) as resep from resep_pulang inner join databarang on resep_pulang.kode_brng=databarang.kode_brng and resep_pulang.no_rawat=?");
+                        } catch (Exception e) {
+                        }
+                        
+                        ArrayList<String> respul = new ArrayList<String>();
+                        
+                        try {
+                            psreseppulang.setString(1, TNoRwCari.getText());
+                            rs5 = psreseppulang.executeQuery();
+                            
+                            while(rs5.next()) {
+                                respul.add(rs5.getString("resep"));
+                            }
+                        } catch (Exception e) {
+                        }
+                        
+                        param.put("resep_pulang", respul.toString());
+                        param.put("keluhan",Sequel.cariIsi("select concat(keluhan_utama,'\n',rps,'\n',rpd) "
+                                + "from penilaian_medis_igd where no_rawat=?",TNoRwCari.getText()));
+                        param.put("pemeriksaan",Sequel.cariIsi("select concat('Tensi: ',td,'\nNadi: ',nadi,'\nRespirasi: ',rr,'\nSuhu: ',suhu,'\n',ket_fisik) "
+                                + "from penilaian_medis_igd where no_rawat=?",TNoRwCari.getText()));
+                        param.put("masuk_igd",Sequel.cariIsi("select tanggal from penilaian_medis_igd where no_rawat=?",TNoRwCari.getText()));
+                        
                         param.put("namars", akses.getnamars());
                         param.put("alamatrs", akses.getalamatrs());
                         param.put("kotars", akses.getkabupatenrs());
