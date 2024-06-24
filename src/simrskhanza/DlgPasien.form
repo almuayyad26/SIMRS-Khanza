@@ -2761,7 +2761,7 @@
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="1">
-            <StringItem index="0" value="04-06-2024"/>
+            <StringItem index="0" value="24-06-2024"/>
           </StringArray>
         </Property>
         <Property name="displayFormat" type="java.lang.String" value="dd-MM-yyyy"/>
@@ -3464,7 +3464,7 @@
                                         </Property>
                                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                                           <StringArray count="1">
-                                            <StringItem index="0" value="04-06-2024"/>
+                                            <StringItem index="0" value="24-06-2024"/>
                                           </StringArray>
                                         </Property>
                                         <Property name="displayFormat" type="java.lang.String" value="dd-MM-yyyy"/>
@@ -3620,6 +3620,8 @@
                                         <Property name="name" type="java.lang.String" value="Alamat" noResource="true"/>
                                       </Properties>
                                       <Events>
+                                        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AlamatMouseEntered"/>
+                                        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AlamatMouseExited"/>
                                         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="AlamatKeyReleased"/>
                                       </Events>
                                       <Constraints>
@@ -3930,7 +3932,7 @@
                                       </Events>
                                       <Constraints>
                                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                                          <AbsoluteConstraints x="130" y="230" width="200" height="26"/>
+                                          <AbsoluteConstraints x="370" y="200" width="200" height="26"/>
                                         </Constraint>
                                       </Constraints>
                                     </Component>
@@ -3979,7 +3981,7 @@
                                       </Events>
                                       <Constraints>
                                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                                          <AbsoluteConstraints x="370" y="230" width="200" height="26"/>
+                                          <AbsoluteConstraints x="130" y="200" width="200" height="26"/>
                                         </Constraint>
                                       </Constraints>
                                     </Component>
@@ -4004,7 +4006,7 @@
                                       </Events>
                                       <Constraints>
                                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                                          <AbsoluteConstraints x="130" y="200" width="200" height="26"/>
+                                          <AbsoluteConstraints x="370" y="230" width="200" height="26"/>
                                         </Constraint>
                                       </Constraints>
                                     </Component>
@@ -4029,7 +4031,7 @@
                                       </Events>
                                       <Constraints>
                                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                                          <AbsoluteConstraints x="370" y="200" width="200" height="26"/>
+                                          <AbsoluteConstraints x="130" y="230" width="200" height="26"/>
                                         </Constraint>
                                       </Constraints>
                                     </Component>
@@ -4039,13 +4041,14 @@
                                           <Border info="null"/>
                                         </Property>
                                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                                          <StringArray count="6">
+                                          <StringArray count="7">
                                             <StringItem index="0" value="TN"/>
                                             <StringItem index="1" value="NY"/>
                                             <StringItem index="2" value="NN"/>
                                             <StringItem index="3" value="SDR"/>
                                             <StringItem index="4" value="AN"/>
                                             <StringItem index="5" value="BY"/>
+                                            <StringItem index="6" value="BY NY"/>
                                           </StringArray>
                                         </Property>
                                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -4160,11 +4163,12 @@
                                         <Property name="name" type="java.lang.String" value="CmbKelPJ" noResource="true"/>
                                       </Properties>
                                       <Events>
+                                        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="CmbKelPJItemStateChanged"/>
                                         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="CmbKelPJKeyPressed"/>
                                       </Events>
                                       <Constraints>
                                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                                          <AbsoluteConstraints x="130" y="417" width="200" height="26"/>
+                                          <AbsoluteConstraints x="370" y="449" width="200" height="26"/>
                                         </Constraint>
                                       </Constraints>
                                     </Component>
@@ -4184,11 +4188,12 @@
                                         <Property name="name" type="java.lang.String" value="CmbKecPJ" noResource="true"/>
                                       </Properties>
                                       <Events>
+                                        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="CmbKecPJItemStateChanged"/>
                                         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="CmbKecPJKeyPressed"/>
                                       </Events>
                                       <Constraints>
                                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                                          <AbsoluteConstraints x="370" y="417" width="200" height="26"/>
+                                          <AbsoluteConstraints x="130" y="449" width="200" height="26"/>
                                         </Constraint>
                                       </Constraints>
                                     </Component>
@@ -4208,11 +4213,12 @@
                                         <Property name="name" type="java.lang.String" value="CmbKabPJ" noResource="true"/>
                                       </Properties>
                                       <Events>
+                                        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="CmbKabPJItemStateChanged"/>
                                         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="CmbKabPJKeyPressed"/>
                                       </Events>
                                       <Constraints>
                                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                                          <AbsoluteConstraints x="130" y="449" width="200" height="26"/>
+                                          <AbsoluteConstraints x="370" y="417" width="200" height="26"/>
                                         </Constraint>
                                       </Constraints>
                                     </Component>
@@ -4232,11 +4238,12 @@
                                         <Property name="name" type="java.lang.String" value="CmbProvPJ" noResource="true"/>
                                       </Properties>
                                       <Events>
+                                        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="CmbProvPJItemStateChanged"/>
                                         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="CmbProvPJKeyPressed"/>
                                       </Events>
                                       <Constraints>
                                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                                          <AbsoluteConstraints x="370" y="449" width="200" height="26"/>
+                                          <AbsoluteConstraints x="130" y="417" width="200" height="26"/>
                                         </Constraint>
                                       </Constraints>
                                     </Component>

@@ -20,6 +20,7 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.table.DefaultTableModel;
@@ -56,7 +57,13 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
         tabMode = new DefaultTableModel(null, row) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
-                return false;
+                return true;
+            }
+            public boolean isLineWrap(int rowIndex, int colIndex) {
+                return true;
+            }
+            public boolean isWrapStyleWord(int rowIndex, int colIndex) {
+                return true;
             }
         };
         tbKamar.setModel(tabMode);
@@ -136,6 +143,7 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnTambah = new javax.swing.JButton();
         internalFrame1 = new widget.InternalFrame();
         Scroll = new widget.ScrollPane();
         tbKamar = new widget.Table();
@@ -149,6 +157,9 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
         label10 = new widget.Label();
         LCount = new widget.Label();
         BtnKeluar = new widget.Button();
+
+        btnTambah.setText("Tambah");
+        btnTambah.setName("btnTambah"); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -351,6 +362,7 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
     private widget.ScrollPane Scroll;
     private widget.ComboBox Status;
     private widget.TextBox TCari;
+    private javax.swing.JButton btnTambah;
     private widget.InternalFrame internalFrame1;
     private widget.Label jLabel18;
     private widget.Label label10;
@@ -384,6 +396,7 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
                             rs.getString(13), rs.getString(14)
                         });
                     }
+                    
                 } catch (Exception ex) {
                     System.out.println(ex);
                 } finally {
@@ -420,6 +433,13 @@ public final class RMCari5SOAPTerakhir extends javax.swing.JDialog {
                             rs.getString(13), rs.getString(14)
                         });
                     }
+                    tabMode.addRow(new String[]{
+                            "","","",
+                            "","","","",
+                            "","","","",
+                            "",""
+                        });
+                    
                 } catch (Exception ex) {
                     System.out.println(ex);
                 } finally {
